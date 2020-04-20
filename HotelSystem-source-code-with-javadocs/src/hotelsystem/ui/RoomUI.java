@@ -12,28 +12,14 @@ import hotelsystem.controller.RoomTypeController;
 import hotelsystem.entity.Room;
 import hotelsystem.entity.RoomStatus;
 
-/**
- * Description of Room UI
- * Prints out room interface options
- * @since 17/04/2018
- * @version 1.0
- * @author Kenneth Yak Yong Seng
- */
 public class RoomUI {
 	private static RoomUI instance = null;
     private Scanner sc;
 
-    /**
-     * Set up scanner
-     */
     private RoomUI() {
         sc = new Scanner(System.in);
     }
     
-    /**
-     * set Instance if instance is null
-     * return instance
-     */
     public static RoomUI getInstance() {
         if (instance == null) {
             instance = new RoomUI();
@@ -49,18 +35,14 @@ public class RoomUI {
     	System.out.println("Room :" + room.getRoomFloorNo()  +  " has been UPDATED.");    
     }
     
-    /**
-     * Printing of Room UI
-     * calls corresponding functions based on input
-     */
     public void displayOptions() {
         int choice;
         do {
-        	System.out.println("~~~~~~~~~~~ ROOM MENU ~~~~~~~~~~~");
+        	System.out.println("____________ ROOM MENU ____________");
             System.out.println("1.Create Room");
             System.out.println("2.Update Room Details");
             System.out.println("0.Back to previous level");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("___________________________________");
             choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -78,10 +60,6 @@ public class RoomUI {
         } while (choice > 0);
     }
     
-    /**
-	 * Input necessary information to create new room
-	 * saves information into database
-	 */
     private void createRoomDetails() {
         sc = new Scanner(System.in);
         String roomFloorNo;
@@ -131,10 +109,6 @@ public class RoomUI {
         RoomController.getInstance().addRoom(room);
     }
     
-    /**
-	 * Input room number to retrieve particular room
-	 * update requested information and saves into Database
-	 */
 	private void updateRoomDetails() {
     	sc = new Scanner(System.in);
     	String roomFloorNo;

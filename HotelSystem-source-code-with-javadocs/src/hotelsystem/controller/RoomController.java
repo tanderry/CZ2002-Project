@@ -10,29 +10,15 @@ import hotelsystem.entity.Room;
 import hotelsystem.entity.RoomStatus;
 import hotelsystem.ui.RoomUI;
 
-/**
- * Description of Room Controller
- * Saving and loading of Rooms to the Database
- * @since 17/04/2018
- * @version 1.0
- * @author Kenneth Yak Yong Seng
- */
 public class RoomController extends DatabaseController{
 	private static final String DB_PATH = "DB/Room.dat";
 	private static RoomController instance = null;
 	private final ArrayList<Room> roomList;
 	
-	/**
-     * Constructor of Room Controller
-     */
 	private RoomController() {
 		roomList = new ArrayList<>();
     }
 	
-	/**
-     * set Instance if instance is null
-     * return instance
-     */
 	public static RoomController getInstance() {
         if (instance == null) {
             instance = new RoomController();
@@ -40,9 +26,6 @@ public class RoomController extends DatabaseController{
         return instance;
     }
 	
-	/**
-     * Update Room details and save onto Database
-     */
 	public void updateRoom(String roomFloorNo, String bedType, boolean wifi, boolean smoke, boolean view) {
 		Room room = getRoom(roomFloorNo);
 		room.setBedType(bedType);
@@ -53,10 +36,6 @@ public class RoomController extends DatabaseController{
 		SaveDB();
 	}
 	
-	/**
-     * retrieve Room using floor number
-     * return Room
-     */
 	public Room getRoom(String roomFloorNo) {
         for (Room room : roomList) {
             if (room.getRoomFloorNo().equals(roomFloorNo))
@@ -65,10 +44,6 @@ public class RoomController extends DatabaseController{
         return null;
     }
 	
-	/**
-     * Retrieve all Rooms from Database
-     * return list of Rooms
-     */
 	public ArrayList<Room> getAllRooms() {
 		ArrayList<Room> rList = new ArrayList<>();
 		for(Room r : roomList) {
@@ -77,10 +52,6 @@ public class RoomController extends DatabaseController{
 		return rList;
 	}
 	
-	/**
-     * Get the total number of room types
-     * return int if found
-     */
 	public int getRoomTypeQty(int roomTypeID) {
 		ArrayList<Room> rList = new ArrayList<>();
 		for(Room r : roomList) {
@@ -90,10 +61,6 @@ public class RoomController extends DatabaseController{
 		return rList.size();
 	}
 	
-	/**
-     * Retrieve all Rooms that are vacant using Start Date and End Date as parameters
-     * return list of Rooms
-     */
 	public ArrayList<Room> getAllRoom(Date start, Date end) {
 		ArrayList<Room> roomStatusList = new ArrayList<>();
 		for(Room room: roomList) {
@@ -143,10 +110,6 @@ public class RoomController extends DatabaseController{
         return roomStatusList;
     }
 	
-	/**
-     * Retrieve all Rooms that is Under-Maintenance
-     * return list of Rooms
-     */
 	public ArrayList<Room> getAllMaintenanceRoom() {
 		ArrayList<Room> roomStatusList = new ArrayList<>();
 		Date current = new Date();
@@ -176,10 +139,6 @@ public class RoomController extends DatabaseController{
         return roomStatusList;
     }
 	
-	/**
-     * Retrieve all rooms that has Room Status under wait list
-     * return list of Rooms
-     */
 	public ArrayList<Room> getAllWaitListRoom(Date start, Date end) {
 		ArrayList<Room> roomStatusList = new ArrayList<>();
 		for(Room room: roomList) {
@@ -206,40 +165,28 @@ public class RoomController extends DatabaseController{
         return roomStatusList;
     }
 
-    /**
-     * Adding of new Room into Database
-     */
     public void addRoom(Room room) {
     	roomList.add(room);
     	SaveDB();
     }
 
-    /**
-     * Loading of Room List from Database
-     * returns error message if file not found
-     */
 	@Override
 	public boolean LoadDB() {
 		roomList.clear();
         if (checkFileExist(DB_PATH)) {
             try {
-                // read String from text file
                 ArrayList<String> stringArray = (ArrayList<String>) read(DB_PATH);
 
                 for (String st : stringArray) {
-                    // get individual 'fields' of the string separated by SEPARATOR
-                    StringTokenizer token = new StringTokenizer(st, SEPARATOR);  //pass in the string to the string tokenizer using delimiter ","
-                    int id = Integer.parseInt(token.nextToken().trim());         //ID                    
+                    StringTokenizer token = new StringTokenizer(st, SEPARATOR);  
+                    int id = Integer.parseInt(token.nextToken().trim());         
                     String roomFloorNo = token.nextToken().trim();
                     int roomTypeID = Integer.parseInt(token.nextToken().trim());
                     String bedType = token.nextToken().trim();
                     boolean wifi = Boolean.parseBoolean(token.nextToken().trim());
                     boolean smoking = Boolean.parseBoolean(token.nextToken().trim());
                     boolean view = Boolean.parseBoolean(token.nextToken().trim());
-
-                    // create Room object from file data
                     Room room = new Room(id, roomFloorNo, roomTypeID, bedType, wifi, smoking, view);
-                    // add to Room list
                     roomList.add(room);
                 }
 
@@ -248,7 +195,6 @@ public class RoomController extends DatabaseController{
 
             } catch (IOException | NumberFormatException ex) {
                 System.out.println("[ERROR] Read Error! Database for Room is not loaded!");
-                //Logger.getLogger(PromoController.class.getName()).log(Level.SEVERE, null, ex);
                 return false;
             }
 
@@ -258,41 +204,33 @@ public class RoomController extends DatabaseController{
         }
 	}
 
-	/**
-     *  Saving of Rooms into Database
-     *  returns error message if file not found
-     */
 	@Override
 	public void SaveDB() {
 		List<String> output = new ArrayList<>();
         StringBuilder st = new StringBuilder();
         if (checkFileExist(DB_PATH)) {
-            // Parse Content to Write
             for (Room room : roomList) {
-                st.setLength(0); 				// Clear Buffer
-                st.append(room.getRoomID()); 	// ID
+                st.setLength(0); 				
+                st.append(room.getRoomID()); 	
                 st.append(SEPARATOR);
-                st.append(room.getRoomFloorNo()); // Room Floor No
+                st.append(room.getRoomFloorNo()); 
                 st.append(SEPARATOR);
-                st.append(room.getRoomType()); 	// Room Type
+                st.append(room.getRoomType()); 
                 st.append(SEPARATOR);
-                st.append(room.getBedType()); 	// Bed Type
+                st.append(room.getBedType()); 
                 st.append(SEPARATOR);
-                st.append(room.isWifi()); 		//  Wifi
+                st.append(room.isWifi()); 	
                 st.append(SEPARATOR);
-                st.append(room.isSmoking()); 	//  Smoking
+                st.append(room.isSmoking()); 
                 st.append(SEPARATOR);
-                st.append(room.isView()); 		//  View
+                st.append(room.isView()); 	
                 st.append(SEPARATOR);
 
                 output.add(st.toString());
             }
 
-            // Attempt to save to file
             try {
                 write(DB_PATH, output);
-                //System.out.printf("RoomController: %,d Entries Saved.\n",
-                        //output.size());
             } catch (Exception ex) {
                 System.out.println("[Error] Write Error! Changes not saved!");
             }

@@ -10,28 +10,14 @@ import hotelsystem.entity.Food;
 import hotelsystem.entity.RoomService;
 import hotelsystem.entity.RoomStatus;
 
-/**Description of Room Service UI
- * Prints out room service interface options
- * @since 17/04/2018
- * @version 1.0
- * @author Kenneth Yak Yong Seng
- */
 public class RoomServiceUI {
 	private static RoomServiceUI instance = null;
 	private Scanner sc;
 	
-	/**
-     * Set up scanner
-     */
 	private RoomServiceUI() {
 		sc = new Scanner(System.in);
 	}
 	
-	
-	/**
-     * set Instance if instance is null
-     * return instance
-     */
 	public static RoomServiceUI getInstance() {
 		if (instance == null) {
             instance = new RoomServiceUI();
@@ -53,18 +39,14 @@ public class RoomServiceUI {
 				+ " has been UPDATED.");  
     }
 	
-	/**
-     * Printing of Room Service UI
-     * calls corresponding functions based on input
-     */
 	public void displayOptions() {
         int choice;
         do {
-        	System.out.println("~~~~~~~~~ ROOM SERVICE MENU ~~~~~~~~~");
+        	System.out.println("__________ ROOM SERVICE MENU __________");
             System.out.println("1.Create Room Service");
             System.out.println("2.Update Room Service Information");
             System.out.println("0.Back");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("_______________________________________");
             choice = sc.nextInt();
             switch (choice) {
                 case 1:	createRoomService();
@@ -80,10 +62,6 @@ public class RoomServiceUI {
         } while (choice > 0);
     }
 	
-	/**
-	 * Input room number for checked-in room and prints food menu
-	 * add new room service into Database
-	 */
 	private void createRoomService() {
 		sc = new Scanner(System.in);
 		double totalPrice = 0;
@@ -130,25 +108,16 @@ public class RoomServiceUI {
 		creationComplete(roomService);
 	}
 	
-	/**
-	 * Function to get all available food list menu
-	 * prints the list and input the food ID to add into the order
-	 */
 	private void displayFoodList() {
 		ArrayList<Food> foodList = FoodController.getInstance().getAllFoodList();
-		System.out.println("~~~~~~~~~~~~~~~~~~~ FOOD MENU ~~~~~~~~~~~~~~~~~~~");
+		System.out.println("____________________ FOOD MENU ____________________");
 		for(Food f : foodList) {
 			System.out.println(f.getFood_ID() + "		" + f.getfood_name() + "		" + f.getfood_price() + "		" + f.getfood_description());
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("___________________________________________________");
 		System.out.println("*Please select the food ID you want to add*");
 	}
 	
-	/**
-	 * Input room number of occupied room
-	 * prints out room service information
-	 * update status accordingly
-	 */
 	private void updateRoomService() {
 		sc = new Scanner(System.in);
 		String status = null;
@@ -160,7 +129,7 @@ public class RoomServiceUI {
 		if(rS != null) {
 			System.out.println("Room Found!!");
 		}
-		System.out.println("~~~~~~~~~~~~ ROOM SERVICE DETAILS ~~~~~~~~~~~~");
+		System.out.println("_____________ ROOM SERVICE DETAILS _____________");
 		System.out.println("ROOM NO: " + rS.getRoomFloor_No());
 		System.out.println("FOOD ORDERED: ");
 		for(Food food : rService.getFoodList()) {
@@ -170,7 +139,7 @@ public class RoomServiceUI {
 		System.out.println("REMARKS: " + rService.getDesc());
 		System.out.println("TOTAL PRICE: " + rService.getTotalPrice());
 		System.out.println("STATUS: " + rService.getStatus());
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("________________________________________________");
 		
 		System.out.println("Update Room Service Status");
 		System.out.println("1. Preparing");
