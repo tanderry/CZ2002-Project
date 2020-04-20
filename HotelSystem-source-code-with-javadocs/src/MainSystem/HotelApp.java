@@ -27,16 +27,6 @@ import hotelsystem.ui.RoomAvailabilityUI;
 import hotelsystem.ui.RoomServiceUI;
 import hotelsystem.ui.RoomUI;
 
-/**
- * The main interface that calls all other interfaces from
- * other classes and methods.
- * @since 17/04/2018
- * @version 1.0
- * @author Kan Kah Seng
- * @author Kenneth Yak Yong Seng
- * @author Koh Wei Hao
- * @author Solberg Anna
- */
 public class HotelApp {
 	public static void main(String args[]) {
 		SimpleDateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
@@ -105,7 +95,7 @@ public class HotelApp {
 		
 		catch (InputMismatchException e) {
 			sc.close();
-        	System.out.println("Invaild Input! Please re-run program.");
+        	System.out.println("Invaild Input! Please enter a valid choice!");
         	return;
         }
 	

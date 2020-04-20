@@ -448,8 +448,8 @@ public class CheckInUI {
         System.out.println("");
         System.out.println("DATE FROM: " + from);
         System.out.println("DATE END: " + to);
-        System.out.println("NO OF CHILDRENS: " + cico.getNumber_of_children());
-        System.out.println("NO OF ADULTS: " + cico.getNumber_of_adults());
+        System.out.println("NO OF CHILDRENS: " + cico.getnumChildren());
+        System.out.println("NO OF ADULTS: " + cico.getnumAdults());
         DecimalFormat df = new DecimalFormat("#.00"); 
         System.out.println("TOTAL CHARGE: $" + df.format(total));
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");

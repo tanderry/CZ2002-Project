@@ -19,28 +19,14 @@ import hotelsystem.entity.Room;
 import hotelsystem.entity.RoomStatus;
 import hotelsystem.entity.RoomType;
 
-/**
- * Description of Reservation UI
- * Prints out reservation interface options
- * @since 17/04/2018
- * @version 1.0
- * @author Kenneth Yak Yong Seng
- */
 public class ReservationUI {
 	private static ReservationUI instance = null;
 	private Scanner sc;
 	
-	/**
-     * Set up scanner
-     */
 	private ReservationUI() {
 		sc = new Scanner(System.in);
 	}
 	
-	/**
-     * set Instance if instance is null
-     * return instance
-     */
 	public static ReservationUI getInstance() {
 		if (instance == null) {
             instance = new ReservationUI();
@@ -56,22 +42,19 @@ public class ReservationUI {
     	System.out.println("Reservation :" + reservation.getReservationCode() +  " has been UPDATED.");  
     }
 	
-	/**
-     * Printing of Reservation UI
-     * calls corresponding functions based on input
-     */
 	public void displayOptions() {
 		ReservationController.getInstance().checkExpiredRoom();
         int choice;
         do {
-        	System.out.println("~~~~~~~~~ RESERVATION MENU ~~~~~~~~~");
+			System.out.println("__________ RESERVATION MENU __________");
+			System.out.println("");
             System.out.println("1. Create Reservation");
             System.out.println("2. Update Reservation Details");
             System.out.println("3. Remove Reservations");
             System.out.println("4. Print Reservation");
             System.out.println("5. Retrieve all Wait List");
             System.out.println("0. Back");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("______________________________________");
             System.out.print("Pick a choice: ");
             choice = sc.nextInt();
             switch (choice) {
@@ -92,10 +75,6 @@ public class ReservationUI {
         } while (choice > 0);
     }
 	
-	/**
-	 * Creating new Reservation by getting guest informations and
-	 * relevant reservation information then storing into Database
-	 */
 	private void createReservationDetails() {
         sc = new Scanner(System.in);
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -176,7 +155,8 @@ public class ReservationUI {
 	                   char filterChoice = sc.next().charAt(0);
 	                   if(filterChoice=='Y' || filterChoice=='y') {
 	                   	ArrayList<Room> filterList = filterRoom(tempRoomList, roomNoList, roomType);
-	                   	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~ ROOMS AVAILABLE ~~~~~~~~~~~~~~~~~~~~~~~~");
+						System.out.println("__________________________ ROOMS AVAILABLE __________________________");
+						System.out.println("");
 	            		System.out.println(String.format("%5s %15s %8s %15s %15s", "Room No", "Room Type", "Wifi" , "Smoking Room", "Window View"));
 	                   	if(!filterList.isEmpty()) {
 	            			for (Room room : filterList) {
@@ -203,10 +183,10 @@ public class ReservationUI {
 	            		}
 	                   	else {
 	                   		System.out.println("No Available Rooms for for your chosen dates");
-	                   		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	                   		System.out.println("_________________________________________________________________");
 	                   		return;
 	                   	}
-	                   		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	                   		System.out.println("_________________________________________________________________");
 	                   }
 	                   else if(filterChoice=='N' || filterChoice=='n') {}
 	                   else {
@@ -237,7 +217,8 @@ public class ReservationUI {
                char filterChoice = sc.next().charAt(0);
                if(filterChoice=='Y' || filterChoice=='y') {
                	ArrayList<Room> filterList = filterRoom(tempRoomList, roomNoList, roomType);
-               	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~ ROOMS AVAILABLE ~~~~~~~~~~~~~~~~~~~~~~~~");
+				System.out.println("_________________________ ROOMS AVAILABLE _________________________");
+				System.out.println("");   
         		System.out.println(String.format("%5s %15s %8s %15s %15s", "Room No", "Room Type", "Wifi" , "Smoking Room", "Window View"));
             	if(!filterList.isEmpty()) {
         			for (Room room : filterList) {
@@ -264,10 +245,10 @@ public class ReservationUI {
         		}
                	else {
                		System.out.println("No Available Rooms for for your chosen dates");
-               		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+               		System.out.println("_________________________________________________________________");
                		return;
                	}
-            		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            		System.out.println("_________________________________________________________________");
                }
                else if(filterChoice=='N' || filterChoice=='n') {}
                else {
@@ -320,10 +301,6 @@ public class ReservationUI {
         }
     }
 	
-	/**
-	 * Input reservation code to retrieve particular reservation
-	 * updating of requested informations
-	 */
 	private void retrieveUpdateReservation() {
 		sc = new Scanner(System.in);
 		ArrayList<String> roomNoList = new ArrayList<>();
@@ -337,7 +314,8 @@ public class ReservationUI {
 			System.out.print("Please enter Reservation Code: ");
 			String rCode = sc.next();
 			Reservation r = ReservationController.getInstance().getReservation(rCode);
-			System.out.println("~~~~~~~~~~~~~~ RESERVATION ~~~~~~~~~~~~~~");
+			System.out.println("_______________ RESERVATION _______________");
+			System.out.println("");
 			System.out.println("Reservation Code: " + r.getReservationCode());
 			System.out.println("Guest Name: " + r.getGuest().getName());
 			System.out.print("Rooms Booked: ");
@@ -352,13 +330,13 @@ public class ReservationUI {
 			System.out.println("No. of Adults: " + r.getNumberOfAdults());
 			System.out.println("No. of Children: " + r.getNumberOfChildren());
 			System.out.println("Reservation ln: " + r.getStatus());
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-			System.out.println("~~~~~~~ UPDATE MENU ~~~~~~~");
+			System.out.println("_________________________________________");
+			System.out.println("_______ UPDATE MENU _______");
 			System.out.println("1. No. of Adults");
 			System.out.println("2. No. of Children");
 			System.out.println("3. Add Rooms");
 			System.out.println("4. Remove Rooms");
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("___________________________");
 			int choice = sc.nextInt();
 			
 			switch(choice) {
@@ -379,7 +357,8 @@ public class ReservationUI {
 		                char filterChoice = sc.next().charAt(0);
 		                if(filterChoice=='Y' || filterChoice=='y') {
 		               	ArrayList<Room> filterList = filterRoom(tempRoomList, roomNoList, roomType);
-		               	System.out.println("~~~~~~~~~~ ROOMS AVAILABLE ~~~~~~~~~~");
+						System.out.println("_____________ ROOMS AVAILABLE _____________");
+						System.out.println("");
 		               	if(!filterList.isEmpty()) {
 		               		for (Room room : filterList) {
 		                   		if(!room.getRoomFloorNo().equals(roomNo)) {
@@ -391,10 +370,10 @@ public class ReservationUI {
 		               	}
 		               	else {
 		               		System.out.println("No Available Rooms for for your chosen dates");
-		               		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		               		System.out.println("_____________________________________");
 		               		return;
 		               	}
-		               		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		               		System.out.println("_____________________________________");
 		                }
 		                else if(filterChoice=='N' || filterChoice=='n') {}
 		                else {
@@ -429,10 +408,6 @@ public class ReservationUI {
 		}
 	}
 	
-	/**
-	 * Function to check for any vacant rooms according to indicated date from and to date to
-	 * returns list of vacant rooms of different room type
-	 */
 	private ArrayList<Room> checkExisting(Date start, Date end, int roomtype, ArrayList<String> roomNo) {
 		String wifi, smoke, view;
 		ArrayList<Room> checkRoom = new ArrayList<>();
@@ -446,7 +421,8 @@ public class ReservationUI {
 				}
 	        }
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~ ROOMS AVAILABLE ~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("_________________________ ROOMS AVAILABLE _________________________");
+		System.out.println("");
 		System.out.println(String.format("%5s %15s %8s %15s %15s", "Room No", "Room Type", "Wifi" , "Smoking Room", "Window View"));
 		if(!checkRoom.isEmpty()) {
 			for (Room room : checkRoom) {
@@ -473,17 +449,13 @@ public class ReservationUI {
 		}
 		else if(checkRoom.isEmpty()){
 			System.out.println("No Available Rooms for for your chosen dates");
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("__________________________________________________________________");
 			return null;
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("__________________________________________________________________");
         return roomList;
     }
 	
-	/**
-	 * Function to retrieve occupied rooms according to indicated date from and to date to
-	 * returns list of occupied rooms of different room type
-	 */
 	private ArrayList<Room> waitListExisting(Date start, Date end, int roomtype, ArrayList<String> roomNo) {
 		String wifi, smoke, view;
 		ArrayList<Room> checkRoom = new ArrayList<>();
@@ -497,7 +469,7 @@ public class ReservationUI {
 				}
 	        }
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~ ROOMS AVAILABLE ~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("_________________________ ROOMS AVAILABLE _________________________");
 		System.out.println(String.format("%5s %15s %8s %15s %15s", "Room No", "Room Type", "Wifi" , "Smoking Room", "Window View"));
 		if(!checkRoom.isEmpty()) {
 			for (Room room : checkRoom) {
@@ -522,15 +494,10 @@ public class ReservationUI {
 				}
 			}
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("__________________________________________________________________");
         return roomList;
     }
 	
-	/**
-	 * Filters through list of vacant room
-	 * from the choice of wifi, smoking and scenary view rooms
-	 * returns list of filtered rooms
-	 */
 	private ArrayList<Room> filterRoom(ArrayList<Room> roomList, ArrayList<String> roomNo, int roomtype){
 		ArrayList<Room> filterRoomList = new ArrayList<>();
 		Boolean wifiB = null;
@@ -563,13 +530,10 @@ public class ReservationUI {
     	return filterRoomList;
 	}
 	
-	/**
-	 * Takes in reservation and prints out confirmation
-	 */
 	private void printConfirmation(Reservation r, double total) {
 		Date start = null;
 		Date end = null;
-		System.out.println("~~~~~~~~~~~~~~~ CONFIRMATION ~~~~~~~~~~~~~~~");
+		System.out.println("_______________ CONFIRMATION _______________");
 		System.out.println("RESERVATION CODE: " + r.getReservationCode());
 		System.out.println("GUEST: " + r.getGuest().getName());
 		System.out.print("ROOMS RESERVED: ");
@@ -585,13 +549,9 @@ public class ReservationUI {
         System.out.println("NO OF ADULTS: " + r.getNumberOfAdults());
         DecimalFormat df = new DecimalFormat("#.00"); 
         System.out.println("TOTAL CHARGE: $" + df.format(total));
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("_____________________________________________");
 	}
 	
-	/**
-	 * Enter reservation code to retrieve reservation
-	 * cancel accordingly for any unwanted reservations
-	 */
 	private void removeReservation() {
 		sc = new Scanner(System.in);
 		
@@ -604,7 +564,8 @@ public class ReservationUI {
 		ArrayList<RoomStatus> statusList = new ArrayList<>();
 		statusList = r.getStatusList();
 		
-		System.out.println("~~~~~~~~~~~~~~ RESERVATION ~~~~~~~~~~~~~~");
+		System.out.println("______________ RESERVATION ______________");
+		System.out.println("");
 		System.out.println("Reservation Code: " + r.getReservationCode());
 		System.out.println("Guest Name: " + r.getGuest().getName());
 		System.out.print("Rooms Booked: ");
@@ -619,7 +580,7 @@ public class ReservationUI {
 		System.out.println("No. of Adults: " + r.getNumberOfAdults());
 		System.out.println("No. of Children: " + r.getNumberOfChildren());
 		System.out.println("Reservation ln: " + r.getStatus());
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("__________________________________________");
 		System.out.println("Do you wish to remove " + r.getReservationCode() + " (Y/N)");
 		try{
 	    	char confirm = sc.next().charAt(0);
@@ -638,10 +599,6 @@ public class ReservationUI {
         }
 	}
 	
-	/**
-	 * Printing of checking Reservation functions UI
-     * calls corresponding functions based on input
-	 */
 	private void printReservationMenu() {
 		sc = new Scanner(System.in);
 		System.out.println("1. Check Reservation\n"
@@ -661,9 +618,6 @@ public class ReservationUI {
 		}
 	}
 	
-	/**
-	 * Enter reservation code to print out relevant information in regards to the particular reservation
-	 */
 	private void checkReservation() {
 		sc = new Scanner(System.in);
 		Date start = null;
@@ -676,7 +630,7 @@ public class ReservationUI {
 		ArrayList<RoomStatus> statusList = new ArrayList<>();
 		statusList = r.getStatusList();
 		
-		System.out.println("~~~~~~~~~~~~~~ RESERVATION ~~~~~~~~~~~~~~");
+		System.out.println("______________ RESERVATION ______________");
 		System.out.println("Reservation Code: " + r.getReservationCode());
 		System.out.println("Guest Name: " + r.getGuest().getName());
 		System.out.print("Rooms Booked: ");
@@ -691,7 +645,7 @@ public class ReservationUI {
 		System.out.println("No. of Adults: " + r.getNumberOfAdults());
 		System.out.println("No. of Children: " + r.getNumberOfChildren());
 		System.out.println("Reservation ln: " + r.getStatus());
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("__________________________________________");
 		System.out.println("");
 		}
 		catch(NullPointerException e) {
@@ -700,9 +654,6 @@ public class ReservationUI {
 		}
 	}
 	
-	/**
-	 * Retrieve all confirmed Reservations from controller and prints out the list
-	 */
 	private void printAllReservations() {
 		ArrayList<Reservation> allRList = ReservationController.getInstance().getAllReservation();
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -710,10 +661,10 @@ public class ReservationUI {
 		Date start = null;
 		Date end = null;
 		
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RESERVATION LIST ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		
+		System.out.println("________________________________________ RESERVATION LIST ________________________________________");
+		System.out.println("");
 		if(!allRList.isEmpty()) {
-			System.out.println("Printed in the following order (ReservationID/ReservationCode/GuestName/RoomNo/StartDate/EndDate)");
+			System.out.println("ReservationID/ReservationCode/GuestName/RoomNo/StartDate/EndDate");
 			for(Reservation r :allRList) {
 				r = ReservationController.getInstance().getReservation(r.getReservationCode());
 				statusList = r.getStatusList();
@@ -732,13 +683,13 @@ public class ReservationUI {
 		else {
 			System.out.println("No Reservations currently at the moment");
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("_________________________________________________________________________________________________");
 		try {
 			System.out.print("Please enter Reservation ID: ");
 			int id = sc.nextInt();
 			Reservation view = ReservationController.getInstance().getReservationByID(id);
 			System.out.println();
-			System.out.println("~~~~~~~~~~~~~~ RESERVATION ~~~~~~~~~~~~~~");
+			System.out.println("_______________ RESERVATION _______________");
 			System.out.println("Reservation Code: " + view.getReservationCode());
 			System.out.println("Guest Name: " + view.getGuest().getName());
 			System.out.print("Rooms Booked: ");
@@ -753,25 +704,22 @@ public class ReservationUI {
 			System.out.println("No. of Adults: " + view.getNumberOfAdults());
 			System.out.println("No. of Children: " + view.getNumberOfChildren());
 			System.out.println("Reservation ln: " + view.getStatus());
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("___________________________________________");
 			System.out.println();
 		}
 		catch (NullPointerException e) {
 			System.out.println("Invalid Input!");
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("___________________________________________");
 			System.out.println();
 		}
 	}
 	
-	/**
-	 * Call wait list function to check for any reservations currently on wait list
-	 * update accordingly if reservation is available for guest
-	 */
 	private void retrieveWaitList() {
 		ArrayList<Reservation> waitList = ReservationController.getInstance().getWaitList();
 		String status = null;
 		int id;
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~ WAITLIST ~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("________________________ WAITLIST ________________________");
+		System.out.println("");
 		System.out.println(String.format("%1s %16s %12s %10s", "ReservationID", "ReservationCode", "GuestName" , "Status"));
 		if(!waitList.isEmpty()) {
 			for(Reservation re : waitList) {
@@ -791,8 +739,8 @@ public class ReservationUI {
 		else {
 			System.out.println("No Guest currently in Waiting List.");
 		}
-    	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    	System.out.print("Do you wish update? (Y/N) :");
+    	System.out.println("_________________________________________________________");
+    	System.out.print("Do you want to update? (Y/N) :");
     	char check = sc.next().charAt(0);
     	if(check == 'y' || check == 'Y') {
     		System.out.print("Reservation ID to update: ");

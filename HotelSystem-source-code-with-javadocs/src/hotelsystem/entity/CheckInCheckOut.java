@@ -15,30 +15,30 @@ public class CheckInCheckOut implements Serializable{
 	private static int maxID = 1;
 	private int CheckInCheckOut_ID;
 	private Guest guest;
-	private int number_of_children;
-	private int number_of_adults;
+	private int numChildren;
+	private int numAdults;
 	private String status;
 	private ArrayList<RoomStatus> roomStatus = new ArrayList<>();
 	private BillPayment bill;
 
-	public CheckInCheckOut(int checkInCheckOut_ID, Guest guest, int number_of_children, int number_of_adults,
+	public CheckInCheckOut(int checkInCheckOut_ID, Guest guest, int numChildren, int numAdults,
 			ArrayList<RoomStatus> roomStatus, String status, BillPayment bill) {
 		CheckInCheckOut_ID = maxID;
 		this.guest = guest;
-		this.number_of_children = number_of_children;
-		this.number_of_adults = number_of_adults;
+		this.numChildren = numChildren;
+		this.numAdults = numAdults;
 		this.roomStatus = roomStatus;
 		this.status = status;
 		this.bill = bill;
 		maxID++;
 	}
 	
-	public CheckInCheckOut(Guest guest, int number_of_children, int number_of_adults,
+	public CheckInCheckOut(Guest guest, int numChildren, int numAdults,
 			ArrayList<RoomStatus> roomStatus, String status, BillPayment bill) {
 		CheckInCheckOut_ID = maxID;
 		this.guest = guest;
-		this.number_of_children = number_of_children;
-		this.number_of_adults = number_of_adults;
+		this.numChildren = numChildren;
+		this.numAdults = numAdults;
 		this.roomStatus = roomStatus;
 		this.status = status;
 		this.bill = bill;
@@ -57,13 +57,13 @@ public class CheckInCheckOut implements Serializable{
 
 	public void setGuest(Guest guest) { this.guest = guest; }
 
-	public int getNumber_of_children() { return number_of_children; }
+	public int getnumChildren() { return numChildren; }
 
-	public void setNumber_of_children(int number_of_children) { this.number_of_children = number_of_children; }
+	public void setnumChildren(int numChildren) { this.numChildren = numChildren; }
 
-	public int getNumber_of_adults() { return number_of_adults; }
+	public int getnumAdults() { return numAdults; }
 
-	public void setNumber_of_adults(int number_of_adults) { this.number_of_adults = number_of_adults; }
+	public void setnumAdults(int numAdults) { this.numAdults = numAdults; }
 
 	public ArrayList<RoomStatus> getRoomStatus() { return roomStatus; }
 
