@@ -5,26 +5,14 @@ import java.util.Scanner;
 import hotelsystem.controller.FoodController;
 import hotelsystem.entity.Food;
 
-/**
- * @since 17/04/2018
- * @version 1.0
- * @author Koh Wei Hao
- */
 public class FoodUI {
 	private static FoodUI instance = null;
 	private Scanner sc;
 
-	/**
-     * Set up scanner
-     */
 	private FoodUI() {
 		sc = new Scanner(System.in);
 	}
 
-	/**
-     * set Instance if instance is null
-     * return instance
-     */
 	public static FoodUI getInstance() {
 		if (instance == null) {
 			instance = new FoodUI();
@@ -32,10 +20,6 @@ public class FoodUI {
 		return instance;
 	}
 
-	/**
-     * Printing of Food Menu UI
-     * calls corresponding functions based on input
-     */
 	public void displayOptions() {
 		int choice;
 		try {
@@ -69,10 +53,6 @@ public class FoodUI {
 		}
 	}
 
-	/**
-	 * Adding new Food Menu to the Database 
-	 * return error message if exist
-	 */
 	private void createFoodItems() {
 		sc = new Scanner(System.in);
 		String foodName = null;
@@ -102,10 +82,6 @@ public class FoodUI {
 		}
 	}
 
-	/**
-	 * Checks for Food if already exist in the Database using Food Name
-	 * return null if non found
-	 */
 	private Food checkExistingFood(String foodName) {
 		Food rFood = FoodController.getInstance().getFood(foodName);
 		if (rFood!=null) {
@@ -116,10 +92,6 @@ public class FoodUI {
 		}
 	}
 
-	/**
-	 * Function to search for a particular food using Food Name
-	 * return error message if food not found
-	 */
 	private Food searchFood() {
 		String foodName;
 		sc = new Scanner(System.in);
@@ -136,10 +108,6 @@ public class FoodUI {
 		}
 	}
 
-	/**
-	 * Retrieve all Food from the Database using searchFood() function
-	 * update requested field and saves back into Database
-	 */
 	private void updateFoodItems(){
 		int choice2;
 		Food food = null;
@@ -204,9 +172,6 @@ public class FoodUI {
 		}
 	}
 
-	/**
-	 * Remove a Food from the menu from the Database using searchFood() function
-	 */
 	public void removeFoodItems() {
 		Food food = null;
 		do

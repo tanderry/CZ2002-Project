@@ -10,17 +10,14 @@ import hotelsystem.entity.Room;
 import hotelsystem.entity.RoomStatus;
 import hotelsystem.ui.RoomUI;
 
-
 public class RoomController extends DatabaseController{
 	private static final String DB_PATH = "DB/Room.dat";
 	private static RoomController instance = null;
 	private final ArrayList<Room> roomList;
 	
-	
 	private RoomController() {
 		roomList = new ArrayList<>();
     }
-	
 	
 	public static RoomController getInstance() {
         if (instance == null) {
@@ -28,7 +25,6 @@ public class RoomController extends DatabaseController{
         }
         return instance;
     }
-	
 	
 	public void updateRoom(String roomFloorNo, String bedType, boolean wifi, boolean smoke, boolean view) {
 		Room room = getRoom(roomFloorNo);
@@ -40,7 +36,6 @@ public class RoomController extends DatabaseController{
 		SaveDB();
 	}
 	
-	
 	public Room getRoom(String roomFloorNo) {
         for (Room room : roomList) {
             if (room.getRoomFloorNo().equals(roomFloorNo))
@@ -48,7 +43,6 @@ public class RoomController extends DatabaseController{
         }
         return null;
     }
-	
 	
 	public ArrayList<Room> getAllRooms() {
 		ArrayList<Room> rList = new ArrayList<>();
@@ -58,7 +52,6 @@ public class RoomController extends DatabaseController{
 		return rList;
 	}
 	
-	
 	public int getRoomTypeQty(int roomTypeID) {
 		ArrayList<Room> rList = new ArrayList<>();
 		for(Room r : roomList) {
@@ -67,7 +60,6 @@ public class RoomController extends DatabaseController{
 		}
 		return rList.size();
 	}
-	
 	
 	public ArrayList<Room> getAllRoom(Date start, Date end) {
 		ArrayList<Room> roomStatusList = new ArrayList<>();
@@ -118,7 +110,6 @@ public class RoomController extends DatabaseController{
         return roomStatusList;
     }
 	
-	
 	public ArrayList<Room> getAllMaintenanceRoom() {
 		ArrayList<Room> roomStatusList = new ArrayList<>();
 		Date current = new Date();
@@ -148,7 +139,6 @@ public class RoomController extends DatabaseController{
         return roomStatusList;
     }
 	
-	
 	public ArrayList<Room> getAllWaitListRoom(Date start, Date end) {
 		ArrayList<Room> roomStatusList = new ArrayList<>();
 		for(Room room: roomList) {
@@ -175,35 +165,28 @@ public class RoomController extends DatabaseController{
         return roomStatusList;
     }
 
-    
     public void addRoom(Room room) {
     	roomList.add(room);
     	SaveDB();
     }
 
-    
 	@Override
 	public boolean LoadDB() {
 		roomList.clear();
         if (checkFileExist(DB_PATH)) {
             try {
-                // read String from text file
                 ArrayList<String> stringArray = (ArrayList<String>) read(DB_PATH);
 
                 for (String st : stringArray) {
-                    // get individual 'fields' of the string separated by SEPARATOR
-                    StringTokenizer token = new StringTokenizer(st, SEPARATOR);  //pass in the string to the string tokenizer using delimiter ","
-                    int id = Integer.parseInt(token.nextToken().trim());         //ID                    
+                    StringTokenizer token = new StringTokenizer(st, SEPARATOR);  
+                    int id = Integer.parseInt(token.nextToken().trim());         
                     String roomFloorNo = token.nextToken().trim();
                     int roomTypeID = Integer.parseInt(token.nextToken().trim());
                     String bedType = token.nextToken().trim();
                     boolean wifi = Boolean.parseBoolean(token.nextToken().trim());
                     boolean smoking = Boolean.parseBoolean(token.nextToken().trim());
                     boolean view = Boolean.parseBoolean(token.nextToken().trim());
-
-                    // create Room object from file data
                     Room room = new Room(id, roomFloorNo, roomTypeID, bedType, wifi, smoking, view);
-                    // add to Room list
                     roomList.add(room);
                 }
 
@@ -212,7 +195,6 @@ public class RoomController extends DatabaseController{
 
             } catch (IOException | NumberFormatException ex) {
                 System.out.println("[ERROR] Read Error! Database for Room is not loaded!");
-                //Logger.getLogger(PromoController.class.getName()).log(Level.SEVERE, null, ex);
                 return false;
             }
 
@@ -222,38 +204,33 @@ public class RoomController extends DatabaseController{
         }
 	}
 
-	
 	@Override
 	public void SaveDB() {
 		List<String> output = new ArrayList<>();
         StringBuilder st = new StringBuilder();
         if (checkFileExist(DB_PATH)) {
-            // Parse Content to Write
             for (Room room : roomList) {
-                st.setLength(0); 				// Clear Buffer
-                st.append(room.getRoomID()); 	// ID
+                st.setLength(0); 				
+                st.append(room.getRoomID()); 	
                 st.append(SEPARATOR);
-                st.append(room.getRoomFloorNo()); // Room Floor No
+                st.append(room.getRoomFloorNo()); 
                 st.append(SEPARATOR);
-                st.append(room.getRoomType()); 	// Room Type
+                st.append(room.getRoomType()); 
                 st.append(SEPARATOR);
-                st.append(room.getBedType()); 	// Bed Type
+                st.append(room.getBedType()); 
                 st.append(SEPARATOR);
-                st.append(room.isWifi()); 		//  Wifi
+                st.append(room.isWifi()); 	
                 st.append(SEPARATOR);
-                st.append(room.isSmoking()); 	//  Smoking
+                st.append(room.isSmoking()); 
                 st.append(SEPARATOR);
-                st.append(room.isView()); 		//  View
+                st.append(room.isView()); 	
                 st.append(SEPARATOR);
 
                 output.add(st.toString());
             }
 
-            // Attempt to save to file
             try {
                 write(DB_PATH, output);
-                //System.out.printf("RoomController: %,d Entries Saved.\n",
-                        //output.size());
             } catch (Exception ex) {
                 System.out.println("[Error] Write Error! Changes not saved!");
             }

@@ -10,18 +10,31 @@ import java.util.StringTokenizer;
 
 import hotelsystem.entity.RoomStatus;
 
-
+/**
+ * Description of Room Status Controller
+ * Controls individual Room Status
+ * To display, saving, loading of Room Status List to the Database
+ * @since 17/04/2018
+ * @version 1.0
+ * @author Kenneth Yak Yong Seng
+ * @author Kan Kah Seng
+ */
 public class RoomStatusController extends DatabaseController{
 	private static final String DB_PATH = "DB/RoomStatus.dat";
 	private static RoomStatusController instance = null;
 	private final ArrayList<RoomStatus> roomStatusList;
 	
-	
+	/**
+     * Constructor for Room Status Controller
+     */
 	private RoomStatusController() {
 		roomStatusList = new ArrayList<>();
     }
 	
-	
+	/**
+     * set Instance if instance is null
+     * return instance
+     */
 	public static RoomStatusController getInstance() {
         if (instance == null) {
             instance = new RoomStatusController();
@@ -29,7 +42,10 @@ public class RoomStatusController extends DatabaseController{
         return instance;
     }
 	
-	
+	/**
+     * Update Room Status's status to Checked-In using Booking ID
+     * save Room Status into Database
+     */
 	public void updateStatustoCheckedIn(RoomStatus roomStatus) {
 		for (RoomStatus status : roomStatusList) {
             if (status.getRoomBookings_ID() == roomStatus.getRoomBookings_ID()) {
@@ -39,7 +55,10 @@ public class RoomStatusController extends DatabaseController{
         SaveDB();
     }
 	
-	
+	/**
+     * Update Room Status's status to Checked-Out using Booking ID
+     * save Room Status into Database
+     */
 	public void updateStatustoCheckedOut(RoomStatus roomStatus) {
 		for (RoomStatus status : roomStatusList) {
             if (status.getRoomBookings_ID() == roomStatus.getRoomBookings_ID()) {
@@ -49,7 +68,10 @@ public class RoomStatusController extends DatabaseController{
         SaveDB();
     }
 	
-	
+	/**
+     * Update Room Status's status to Cancelled using Booking ID
+     * save Room Status into Database
+     */
 	public void updateStatustoCancelled(RoomStatus roomStatus) {
 		for (RoomStatus status : roomStatusList) {
             if (status.getRoomBookings_ID() == roomStatus.getRoomBookings_ID()) {
@@ -59,7 +81,10 @@ public class RoomStatusController extends DatabaseController{
         SaveDB();
 	}
 	
-	
+	/**
+     * Update Room Status's status to Expired using Booking ID
+     * save Room Status into Database
+     */
 	public void updateStatustoExpired(RoomStatus roomStatus) {
 		for (RoomStatus status : roomStatusList) {
             if (status.getRoomBookings_ID() == roomStatus.getRoomBookings_ID()) {
@@ -69,7 +94,10 @@ public class RoomStatusController extends DatabaseController{
         SaveDB();
 	}
 	
-	
+	/**
+     * Update Room Status's status under wait list to Confirmed
+     * save Room Status into Database
+     */
 	public void updateWaitList(ArrayList<RoomStatus> rsList) {
 		for (RoomStatus status : rsList) {
         	status.setStatus("Confirmed");
@@ -77,7 +105,10 @@ public class RoomStatusController extends DatabaseController{
         SaveDB();
 	}
 	
-	
+	/**
+     * Validate whether if Room Status is Under-Maintenance, Reserved or Checked-In
+     * return false if Room Status's status not under any of the statuses indicated
+     */
 	public Boolean checkRoomStatus(RoomStatus rs) {
 		Boolean check = null;
 		for (RoomStatus roomStatus : roomStatusList) {
@@ -91,7 +122,10 @@ public class RoomStatusController extends DatabaseController{
 		return check;
 	}
 	
-	
+	/**
+     * Retrieve Room Status using room number
+     * return list of Room Statuses if not empty
+     */
 	public ArrayList<RoomStatus> getRoomStatus(String roomFloorNo) {
 		ArrayList<RoomStatus> result = new ArrayList<>();
         for (RoomStatus roomStatus : roomStatusList) {
@@ -105,7 +139,10 @@ public class RoomStatusController extends DatabaseController{
         
     }
 	
-	
+	/**
+     * Retrieve Room Status using room number, status under Checked-In and current date before Room Status's date to
+     * return Room Status
+     */
 	public RoomStatus getStatus(String roomFloorNo) {
 		Date current = new Date();
         for (RoomStatus roomStatus : roomStatusList) {
@@ -115,7 +152,10 @@ public class RoomStatusController extends DatabaseController{
         return null;
     }
 	
-	
+	/**
+     * Retrieve Room Statuses using start date and end date
+     * return list of Room Statuses
+     */
 	public ArrayList<RoomStatus> getAllReserveRoom(Date start, Date end){
 		ArrayList<RoomStatus> reserveList = new ArrayList<>();
 		for (RoomStatus roomS : roomStatusList) {
@@ -126,13 +166,18 @@ public class RoomStatusController extends DatabaseController{
         return reserveList;
 	}
 	
-	
+	/**
+     * Add new Room Status into Database
+     */
 	public void addRoomStatus(RoomStatus roomStatus) {
 		roomStatusList.add(roomStatus);
     	SaveDB();
     }
 
-	
+	/**
+     * Loading of Room Statuses from Database
+     * returns error message if file not found
+     */
 	@Override
 	public boolean LoadDB() {
 		SimpleDateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
@@ -181,7 +226,10 @@ public class RoomStatusController extends DatabaseController{
         }
 	}
 
-	
+	/**
+     *  Saving of Room Statuses into Database
+     *  returns error message if file not found
+     */
 	@Override
 	public void SaveDB() {
 		// TODO Auto-generated method stub

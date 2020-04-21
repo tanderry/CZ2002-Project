@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="HotelSystem-source-code-with-javadocs/src"/>
-	<classpathentry kind="lib" path="HotelSystem.jar"/>
-	<classpathentry kind="output" path="HotelSystem-source-code-with-javadocs/bin"/>
-</classpath>

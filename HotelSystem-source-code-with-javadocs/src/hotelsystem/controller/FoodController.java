@@ -7,25 +7,21 @@ import java.util.StringTokenizer;
 
 import hotelsystem.entity.Food;
 
-
 public class FoodController extends DatabaseController{
 	private static final String DB_PATH = "DB/Food.dat";
 	private static FoodController instance = null;
 	private final ArrayList<Food> foodList;
 
-	
 	private FoodController() {
 		foodList = new ArrayList<>();
 	}
 
-	
 	public static FoodController getInstance() {
 		if (instance == null) {
 			instance = new FoodController();
 		}
 		return instance;
 	}
-	
 	
 	public void updateFood(String foodName, Double foodPrice, String foodDescription) {
 		Food food = getFood(foodName);
@@ -34,7 +30,6 @@ public class FoodController extends DatabaseController{
 		SaveDB();
 	}
 
-	
 	public Food getFood(String name) {
 		String checkName = name.toUpperCase();
 		for (Food food : foodList) {
@@ -45,18 +40,15 @@ public class FoodController extends DatabaseController{
 		return null;
 	}
 
-	
 	public void removeFood(Food food) {
 		foodList.remove(food);
 		SaveDB();
 	}
 
-	
 	public void addFood(Food food) {
 		foodList.add(food);
 		SaveDB();
 	}
-	
 	
 	public ArrayList<Food> getAllFoodList() {
 		ArrayList<Food> fList = new ArrayList<>();
@@ -65,7 +57,6 @@ public class FoodController extends DatabaseController{
 		}
 		return fList;
 	}
-	
 	
 	public Food getFood(int foodID) {
 		for (Food food : foodList) {
@@ -76,21 +67,18 @@ public class FoodController extends DatabaseController{
 		return null;
 	}
 
-	
 	@Override
 	public boolean LoadDB() {
 		foodList.clear();
 		if (checkFileExist(DB_PATH)) {
 			try {
-				// read String from text file
 				ArrayList<String> stringArray = (ArrayList<String>) read(DB_PATH);
 
 				for (String st : stringArray) {
-					// get individual 'fields' of the string separated by SEPARATOR
-					StringTokenizer token = new StringTokenizer(st, SEPARATOR);  //pass in the string to the string tokenizer using delimiter ","
+					StringTokenizer token = new StringTokenizer(st, SEPARATOR);  
 					@SuppressWarnings("unused")
 					int id = Integer.parseInt(token.nextToken().trim());
-					String food_name = token.nextToken().trim();  				//ID
+					String food_name = token.nextToken().trim();  			
 					double food_price = Double.parseDouble(token.nextToken().trim());                    
 					String food_description = token.nextToken().trim();
 
@@ -103,7 +91,6 @@ public class FoodController extends DatabaseController{
 
 			} catch (IOException | NumberFormatException ex) {
 				System.out.println("[ERROR] Read Error! Database for Food is not loaded!");
-				//Logger.getLogger(PromoController.class.getName()).log(Level.SEVERE, null, ex);
 				return false;
 			}
 
@@ -113,16 +100,14 @@ public class FoodController extends DatabaseController{
 		}
 	}
 
-	
 	@Override
 	public void SaveDB() {
 		List<String> output = new ArrayList<>();
 		StringBuilder st = new StringBuilder();
 		if (checkFileExist(DB_PATH)) {
-			// Parse Content to Write
 			for (Food food : foodList) {
-				st.setLength(0); 					// Clear Buffer
-				st.append(food.getFood_ID()); 	// ID
+				st.setLength(0); 					
+				st.append(food.getFood_ID()); 	
                 st.append(SEPARATOR);
 				st.append(food.getfood_name()); 		
 				st.append(SEPARATOR);
@@ -134,11 +119,8 @@ public class FoodController extends DatabaseController{
 				output.add(st.toString());
 			}
 
-			// Attempt to save to file
 			try {
 				write(DB_PATH, output);
-				//System.out.printf("FoodController: %,d Entries Saved.\n",
-						//output.size());
 			} catch (Exception ex) {
 				System.out.println("[Error] Write Error! Changes not saved!");
 			}

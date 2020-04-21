@@ -8,20 +8,31 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import hotelsystem.controller.PromoController;
-import hotelsystem.controller.Room_Type_Manager;
+import hotelsystem.controller.RoomTypeController;
 import hotelsystem.entity.Promo;
 
-
+/**
+ * Description of Promo UI
+ * Prints out promo interface options
+ * @since 17/04/2018
+ * @version 1.0
+ * @author Kan Kah Seng
+ */
 public class PromoUI {
 	private static PromoUI instance = null;
 	private final Scanner sc;
 
-	
+	/**
+     * Set up scanner
+     */
 	private PromoUI() {
 		sc = new Scanner(System.in);
 	}
 
-	
+	/**
+     * set Instance if instance is null
+     * return instance
+     */
 	public static PromoUI getInstance() {
 		if (instance == null) {
 			instance = new PromoUI();
@@ -29,7 +40,10 @@ public class PromoUI {
 		return instance;
 	}
 
-	
+	/**
+     * Printing of Promo UI
+     * calls corresponding functions based on input
+     */
 	public void displayOptions() {
 		int choice;
 		try {
@@ -58,7 +72,10 @@ public class PromoUI {
         }
     }
 	
-	
+	/**
+	 * Adding new promotion from a certain date to a certain date
+	 * for guest that specially book a room and check in for the duration
+	 */
 	public void createPromo() {
 		int roomtypeID;
 		String dateFrom;
@@ -68,7 +85,7 @@ public class PromoUI {
         Date startDate = null;
         Date endDate = null;
 		 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		 int roomtype = Room_Type_Manager.getInstance().getAllRoomType();
+		 int roomtype = RoomTypeController.getInstance().getAllRoomType();
      	 System.out.println("Select The Room Type");
      	 try {
 	         roomtypeID = sc.nextInt();
@@ -107,7 +124,9 @@ public class PromoUI {
         }
 	}
 	
-	
+	/**
+	 * Retrieve all ongoing promo and selecting a certain promo using ID to remove
+	 */
 	public void removePromo() {
 		ArrayList<Promo> returnPromo = PromoController.getInstance().getPromoList();
 		if (returnPromo.size()!=0) {

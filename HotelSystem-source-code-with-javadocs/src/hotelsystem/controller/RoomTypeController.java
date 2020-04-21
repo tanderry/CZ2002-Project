@@ -14,15 +14,15 @@ import hotelsystem.entity.RoomType;
  * @version 1.0
  * @author Kenneth Yak Yong Seng
  */
-public class Room_Type_Manager extends DatabaseController{
+public class RoomTypeController extends DatabaseController{
 	private static final String DB_PATH = "DB/RoomType.dat";
-	private static Room_Type_Manager instance = null;
+	private static RoomTypeController instance = null;
 	private final ArrayList<RoomType> roomTypeList;
 	
 	/**
      * Constructor for Room Type Controller
      */
-	private Room_Type_Manager() {
+	private RoomTypeController() {
 		roomTypeList = new ArrayList<>();
     }
 	
@@ -30,9 +30,9 @@ public class Room_Type_Manager extends DatabaseController{
      * set Instance if instance is null
      * return instance
      */
-	public static Room_Type_Manager getInstance() {
+	public static RoomTypeController getInstance() {
         if (instance == null) {
-            instance = new Room_Type_Manager();
+            instance = new RoomTypeController();
         }
         return instance;
     }

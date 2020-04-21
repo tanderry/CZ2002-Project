@@ -2,20 +2,13 @@ package hotelsystem.entity;
 
 import java.io.Serializable;
 
-/**
- * Description of Room
- * contains get & set method for Room
- * @since 17/04/2018
- * @version 1.0
- * @author Kenneth Yak Yong Seng
- */
 @SuppressWarnings("serial")
 public class Room implements Serializable{
 	private static int incID = 1;
 	private int room_ID;
 	private String room_floor_no;
 	private int roomTypeID;
-	private String bed_type; //Need to include
+	private String bed_type; 
 	private boolean wifi;
 	private boolean smoking;
 	private boolean view;

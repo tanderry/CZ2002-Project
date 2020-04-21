@@ -6,31 +6,46 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import hotelsystem.controller.RoomController;
-import hotelsystem.controller.Room_Type_Manager;
+import hotelsystem.controller.RoomTypeController;
 import hotelsystem.entity.Room;
 import hotelsystem.entity.RoomType;
 
-
-public class Room_Statistic_UI {
-	private static Room_Statistic_UI instance = null;
+/**
+ * Description of Print Room UI
+ * Prints out checking of room interface options
+ * @since 17/04/2018
+ * @version 1.0
+ * @author Kan Kah Seng
+ * @author Solberg Anna
+ */
+public class PrintRoomUI {
+	private static PrintRoomUI instance = null;
 	private final Scanner sc;
 	private Date today = new Date( );
     private Date tomorrow = new Date(today.getTime() + (1000 * 60 * 60 * 24));
 
-    
-    private Room_Statistic_UI() { 
+    /**
+     * Set up scanner
+     */
+    private PrintRoomUI() { 
         sc = new Scanner(System.in);
     }
     
-    
-    public static Room_Statistic_UI getInstance() {
+    /**
+     * set Instance if instance is null
+     * return instance
+     */
+    public static PrintRoomUI getInstance() {
         if (instance == null) {
-            instance = new Room_Statistic_UI();
+            instance = new PrintRoomUI();
         }
         return instance;
     }
     
-    
+    /**
+     * Printing of checking Room Status UI
+     * calls corresponding functions based on input
+     */
     public void displayOptions() {
         int choice;
         try {
@@ -60,10 +75,13 @@ public class Room_Statistic_UI {
         }
     } 
     
-    
+    /**
+     * Retrieve all rooms that is vacant for today and tomorrow and counts the total number
+     * prints individual room and size of list
+     */
     private void printRoomTypeOccupancyRate() {
     		    
-	    ArrayList<RoomType> roomTList = Room_Type_Manager.getInstance().getAllTypes();
+	    ArrayList<RoomType> roomTList = RoomTypeController.getInstance().getAllTypes();
 	    ArrayList<Room> roomList = RoomController.getInstance().getAllRoom(today,tomorrow);
 	    ArrayList<Room> vacantRooms = new ArrayList<>();
 	    
@@ -86,7 +104,12 @@ public class Room_Statistic_UI {
 	    }
     }
     
-    
+    /**
+     * Retrieve all rooms that is vacant for today and and tomorrow
+     * Retrieve all rooms that is occupied currently
+     * Retrieve all rooms that is currently on maintenance
+     * prints out individual room number according to the status
+     */
     private void printRoomStatus() {
 	    System.out.println("Vacant:");
 	    ArrayList<Room> vacantroomList = RoomController.getInstance().getAllRoom(today,tomorrow);

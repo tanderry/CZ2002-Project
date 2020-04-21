@@ -6,14 +6,14 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import hotelsystem.controller.Billing_Manager;
+import hotelsystem.controller.BillPaymentController;
 import hotelsystem.controller.PromoController;
 import hotelsystem.controller.RoomController;
 import hotelsystem.controller.RoomServiceController;
-import hotelsystem.controller.Room_Type_Manager;
+import hotelsystem.controller.RoomTypeController;
 import hotelsystem.entity.BillPayment;
 import hotelsystem.entity.Card;
-import hotelsystem.entity.Check_In_Out;
+import hotelsystem.entity.CheckInCheckOut;
 import hotelsystem.entity.Food;
 import hotelsystem.entity.Promo;
 import hotelsystem.entity.Room;
@@ -21,15 +21,21 @@ import hotelsystem.entity.RoomService;
 import hotelsystem.entity.RoomStatus;
 import hotelsystem.entity.RoomType;
 
-
-public class Billing_UI {
-	private static Billing_UI instance = null;
+/**
+ * Description of Bill Payment UI
+ * Generate bill and enable guest to view invoice and make payment
+ * @since 17/04/2018
+ * @version 1.0
+ * @author Kan Kah Seng
+ */
+public class BillPaymentUI {
+	private static BillPaymentUI instance = null;
     private Scanner sc;
 
     /**
      * Set up scanner
      */
-    private Billing_UI() {
+    private BillPaymentUI() {
         sc = new Scanner(System.in);
     }
     
@@ -37,9 +43,9 @@ public class Billing_UI {
      * set Instance if instance is null
      * return instance
      */
-    public static Billing_UI getInstance() {
+    public static BillPaymentUI getInstance() {
         if (instance == null) {
-            instance = new Billing_UI();
+            instance = new BillPaymentUI();
         }
         return instance;
     }
@@ -48,7 +54,7 @@ public class Billing_UI {
 	 * Generate Bill for guest when they checked-out all rooms
 	 * show payment success once payment is made
 	 */
-    public void generateBill(Check_In_Out cico) {
+    public void generateBill(CheckInCheckOut cico) {
     	int days=0;
     	double roomTotal = 0;
     	double roomSerTotal = 0;
@@ -72,7 +78,7 @@ public class Billing_UI {
         	Date dateCheck = rS.getDate_from();
         	for(int i = 0; i < days ; i++) {
             	Room rm = RoomController.getInstance().getRoom(rS.getRoomFloor_No());
-            	RoomType rT = Room_Type_Manager.getInstance().getRoom(rm.getRoomType());
+            	RoomType rT = RoomTypeController.getInstance().getRoom(rm.getRoomType());
             	if(dateCheck.equals(rS.getDate_from()) || dateCheck.equals(rS.getDate_to()) || (dateCheck.after(rS.getDate_from()) && dateCheck.before(rS.getDate_to()))) {
             		String dateCheckS = dfS.format(dateCheck);
             		if(dateCheckS.equals("Sat") || dateCheckS.equals("Sun")) {
@@ -171,7 +177,7 @@ public class Billing_UI {
         }
         
         BillPayment bill = new BillPayment(cico,rSerList,roomTotal,roomSerTotal,totalPrice,discountAmt,taxAmt,grandTotal,paymentMode,card,paymentStatus);
-        Billing_Manager.getInstance().insertbill(bill);
+        BillPaymentController.getInstance().addBillPayment(bill);
         
         System.out.println("-------Payment Successful-------");
         return;

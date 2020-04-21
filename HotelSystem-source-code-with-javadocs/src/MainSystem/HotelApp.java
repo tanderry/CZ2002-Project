@@ -6,8 +6,8 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import hotelsystem.controller.Billing_Manager;
-import hotelsystem.controller.Checkinout_Manager;
+import hotelsystem.controller.BillPaymentController;
+import hotelsystem.controller.CheckInCheckOutController;
 import hotelsystem.controller.FoodController;
 import hotelsystem.controller.GuestController;
 import hotelsystem.controller.PromoController;
@@ -15,18 +15,17 @@ import hotelsystem.controller.ReservationController;
 import hotelsystem.controller.RoomController;
 import hotelsystem.controller.RoomServiceController;
 import hotelsystem.controller.RoomStatusController;
-import hotelsystem.controller.Room_Type_Manager;
-import hotelsystem.ui.Check_In_UI;
-import hotelsystem.ui.Check_Out_UI;
+import hotelsystem.controller.RoomTypeController;
+import hotelsystem.ui.CheckInUI;
+import hotelsystem.ui.CheckOutUI;
 import hotelsystem.ui.FoodUI;
 import hotelsystem.ui.GuestUI;
-import hotelsystem.ui.Room_Statistic_UI;
+import hotelsystem.ui.PrintRoomUI;
 import hotelsystem.ui.PromoUI;
 import hotelsystem.ui.ReservationUI;
-import hotelsystem.ui.Room_Filter_UI;
+import hotelsystem.ui.RoomAvailabilityUI;
 import hotelsystem.ui.RoomServiceUI;
 import hotelsystem.ui.RoomUI;
-
 
 public class HotelApp {
 	public static void main(String args[]) {
@@ -34,14 +33,14 @@ public class HotelApp {
 		SimpleDateFormat dfTime = new SimpleDateFormat("hh:mm a");
 		GuestController.getInstance().loadData();
 		RoomController.getInstance().LoadDB();
-		Room_Type_Manager.getInstance().LoadDB();
+		RoomTypeController.getInstance().LoadDB();
 		RoomStatusController.getInstance().LoadDB();
 		ReservationController.getInstance().loadData();
-		Checkinout_Manager.getInstance().loadData();
+		CheckInCheckOutController.getInstance().loadData();
 		RoomServiceController.getInstance().loadData();
 		FoodController.getInstance().LoadDB();
 		PromoController.getInstance().LoadDB();
-		Billing_Manager.getInstance().loadData();
+		BillPaymentController.getInstance().loadData();
 		int choice;
 		Date today = new Date();
 		String date = dfDate.format(today);
@@ -80,13 +79,13 @@ public class HotelApp {
 							break;
 					case 5: FoodUI.getInstance().displayOptions();	
 							break;
-					case 6: Room_Filter_UI.getInstance().displayOptions();
+					case 6: RoomAvailabilityUI.getInstance().displayOptions();
 							break;
-					case 7: Check_In_UI.getInstance().displayOptions();
+					case 7: CheckInUI.getInstance().displayOptions();
 							break;
-					case 8: Check_Out_UI.getInstance().displayOptions();
+					case 8: CheckOutUI.getInstance().displayOptions();
 							break;
-					case 9: Room_Statistic_UI.getInstance().displayOptions();
+					case 9: PrintRoomUI.getInstance().displayOptions();
 							break;
 					case 10:PromoUI.getInstance().displayOptions();
 							break;
@@ -96,20 +95,20 @@ public class HotelApp {
 		
 		catch (InputMismatchException e) {
 			sc.close();
-        	System.out.println("Invaild Input! Please re-run program.");
+        	System.out.println("Invaild Input! Please enter a valid choice!");
         	return;
         }
 	
 		GuestController.getInstance().storeData();
 		RoomController.getInstance().SaveDB();
-		Room_Type_Manager.getInstance().SaveDB();
+		RoomTypeController.getInstance().SaveDB();
 		RoomStatusController.getInstance().SaveDB();
 		ReservationController.getInstance().storeData();
-		Checkinout_Manager.getInstance().storeData();
+		CheckInCheckOutController.getInstance().storeData();
 		FoodController.getInstance().SaveDB();
 		RoomServiceController.getInstance().storeData();
 		PromoController.getInstance().SaveDB();
-		Billing_Manager.getInstance().storeData();
+		BillPaymentController.getInstance().storeData();
 		sc.close();
 	}
 }

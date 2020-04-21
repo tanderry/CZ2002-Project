@@ -3,36 +3,42 @@ package hotelsystem.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
+/**
+ * Description for Check In Check Out
+ * contains get & set methods required for Check In Check Out
+ * @since 17/04/2018
+ * @version 1.0
+ * @author Kan Kah Seng
+ */
 @SuppressWarnings("serial")
-public class Check_In_Out implements Serializable{
+public class CheckInCheckOut implements Serializable{
 	private static int maxID = 1;
 	private int CheckInCheckOut_ID;
 	private Guest guest;
-	private int child;
-	private int adults;
+	private int numChildren;
+	private int numAdults;
 	private String status;
 	private ArrayList<RoomStatus> roomStatus = new ArrayList<>();
 	private BillPayment bill;
 
-	public Check_In_Out(int checkInCheckOut_ID, Guest guest, int child, int adults,
+	public CheckInCheckOut(int checkInCheckOut_ID, Guest guest, int numChildren, int numAdults,
 			ArrayList<RoomStatus> roomStatus, String status, BillPayment bill) {
 		CheckInCheckOut_ID = maxID;
 		this.guest = guest;
-		this.child = child;
-		this.adults = adults;
+		this.numChildren = numChildren;
+		this.numAdults = numAdults;
 		this.roomStatus = roomStatus;
 		this.status = status;
 		this.bill = bill;
 		maxID++;
 	}
 	
-	public Check_In_Out(Guest guest, int child ,int adults,
+	public CheckInCheckOut(Guest guest, int numChildren, int numAdults,
 			ArrayList<RoomStatus> roomStatus, String status, BillPayment bill) {
 		CheckInCheckOut_ID = maxID;
 		this.guest = guest;
-		this.child = child;
-		this.adults = adults;
+		this.numChildren = numChildren;
+		this.numAdults = numAdults;
 		this.roomStatus = roomStatus;
 		this.status = status;
 		this.bill = bill;
@@ -41,7 +47,7 @@ public class Check_In_Out implements Serializable{
 	
 	public static int getMaxID() { return maxID; }
 
-	public static void setMaxID(int maxID) { Check_In_Out.maxID = maxID; }
+	public static void setMaxID(int maxID) { CheckInCheckOut.maxID = maxID; }
 
 	public int getCheckInCheckOut_ID() { return CheckInCheckOut_ID; }
 
@@ -51,13 +57,13 @@ public class Check_In_Out implements Serializable{
 
 	public void setGuest(Guest guest) { this.guest = guest; }
 
-	public int getNumber_of_children() { return child; }
+	public int getnumChildren() { return numChildren; }
 
-	public void setNumber_of_children(int child) { this.child = child; }
+	public void setnumChildren(int numChildren) { this.numChildren = numChildren; }
 
-	public int getNumber_of_adults() { return adults; }
+	public int getnumAdults() { return numAdults; }
 
-	public void setNumber_of_adults(int adults) { this.adults = adults; }
+	public void setnumAdults(int numAdults) { this.numAdults = numAdults; }
 
 	public ArrayList<RoomStatus> getRoomStatus() { return roomStatus; }
 
