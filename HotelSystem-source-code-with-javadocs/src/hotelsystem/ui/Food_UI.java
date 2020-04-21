@@ -177,7 +177,7 @@ public class Food_UI {
 		do
 			food = searchFood();
 		while (food == null);
-		System.out.println("Are you sure you want to delete the food " + food.getfood_name() + " ? (Y-Yes, N-No)");
+		System.out.println("Are you sure you would like to delete " + food.getfood_name() + " ? (Y-Yes, N-No)");
 		try{
 			char reply = sc.next().charAt(0);
 			if (reply=='Y' || reply=='y') {

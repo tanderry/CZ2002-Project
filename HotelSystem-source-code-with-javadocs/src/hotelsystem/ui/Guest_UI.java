@@ -74,7 +74,7 @@ public class Guest_UI {
 		    System.out.println("Enter Guest NRIC: ");
 		    nric = sc.nextLine();
 		   if (checkExistingGuestByIC(nric)!=null) {
-				System.out.println("Identity Numnber exist in the system. Please Try Again.");
+				System.out.println("NRIC already exists in the system. Please Try Again.");
 				return;
 		   }
 		   else {
@@ -136,10 +136,10 @@ public class Guest_UI {
         try {
 	        System.out.println("Enter Guest Name: ");
 	        guestName = sc.nextLine();
-		        System.out.println("Enter Guest Identity Number: ");
+		        System.out.println("Enter Guest NRIC: ");
 		        nric = sc.nextLine();
 		   if (checkExistingGuestByIC(nric)!=null) {
-		       System.out.println("Identity Numnber exist in the system. Please Try Again.");
+		       System.out.println("NRIC exists in the system. Please Try Again.");
 		       rguest= null;
 		   }
 		   else {
@@ -205,7 +205,7 @@ public class Guest_UI {
     	sGuest = Guest_Manager.getInstance().searchGuestList(guestName);
         if (sGuest.size()!=0) {
         	System.out.println(sGuest.size() + " Guest Found");
-        	System.out.println("Guest ID	Guest Name	Guest Identity Number");
+        	System.out.println("Guest ID	Guest Name	Guest NRIC");
         	for(Guest guest : sGuest){
         		System.out.println(guest.getGuest_ID() +"		"+ guest.getName() +"		"+ guest.getIdentity_no());
         	}
@@ -256,17 +256,16 @@ public class Guest_UI {
 			else {
 				cc ="vaild";
 			}
-			System.out.println("Guest Details:\n"
+			System.out.println("GUEST DETAILS AS FOLLOWS:\n"
 					 + "Guest ID: " + guest.getGuest_ID() +"\n"
 					 + "Name: " + guest.getName() +"\n"
-					 + "Identity Number: " + guest.getIdentity_no() +"\n"
+					 + "NRIC: " + guest.getIdentity_no() +"\n"
 					 + "Address: " + guest.getAddress() +"\n"
 					 + "Phone Number: " + guest.getContact_no() +"\n"
 					 + "Country: " + guest.getCountry() +"\n"
 					 + "Sex: " + gender +"\n"
 					 + "Nationality: " + guest.getNationality() +"\n"
-					 + "Credit Card: " + cc +"\n"
-					 + "---------------------------------------");
+					 + "Credit Card: " + cc +"\n");
 		}
     }
     
@@ -283,14 +282,13 @@ public class Guest_UI {
 	    		do {
 	    			System.out.println("-Select Field to Update (Enter 0 to end)-\n"
 	    							 + "1. Name\n"
-	    							 + "2. Identity Number\n"
+	    							 + "2. NRIC\n"
 	    							 + "3. Address\n"
 	    							 + "4. Contact Number\n"
 	    							 + "5. Country\n"
 	    							 + "6. Gender\n"
 	    							 + "7. Nationality\n"
-	    							 + "8. Credit Card Details\n"
-	    							 + "---------------------------------------");
+	    							 + "8. Credit Card Details\n");
 	    			
 	    			choice2 = sc.nextInt();
 	    			switch(choice2) {
@@ -303,16 +301,16 @@ public class Guest_UI {
 	    					}
 	    						break;
 	    				case 2:
-	    					System.out.println("Enter New Identity Number: ");
+	    					System.out.println("Enter New NRIC: ");
 	    					if (sc.nextLine() != null) {
 	    						String idNo = sc.nextLine();
 	    						 if (checkExistingGuestByIC(idNo)!=null) {
-	    						       System.out.println("Identity Number exist in the system. Please Try Again.");
+	    						       System.out.println("NRIC exist in the system. Please Try Again.");
 	    						       break;
 	    						 }
 	    						 else {
 	    						guest.setIdentity_no(idNo);
-	    						System.out.println("Identity Number Saved");
+	    						System.out.println("NRIC Saved");
 	    						 }
 	    					}
 	    					break;

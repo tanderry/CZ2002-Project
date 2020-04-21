@@ -42,7 +42,8 @@ public class RoomService_UI {
 	public void displayOptions() {
         int choice;
         do {
-        	System.out.println("__________ ROOM SERVICE MENU __________");
+			System.out.println("__________ ROOM SERVICE MENU __________");
+			System.out.println("");
             System.out.println("1.Create Room Service");
             System.out.println("2.Update Room Service Information");
             System.out.println("0.Back");
@@ -111,6 +112,7 @@ public class RoomService_UI {
 	private void displayFoodList() {
 		ArrayList<Food> foodList = Food_Manager.getInstance().getAllFoodList();
 		System.out.println("____________________ FOOD MENU ____________________");
+		System.out.println("");
 		for(Food f : foodList) {
 			System.out.println(f.getFood_ID() + "		" + f.getfood_name() + "		" + f.getfood_price() + "		" + f.getfood_description());
 		}
@@ -130,6 +132,7 @@ public class RoomService_UI {
 			System.out.println("Room Found!!");
 		}
 		System.out.println("_____________ ROOM SERVICE DETAILS _____________");
+		System.out.println("");
 		System.out.println("ROOM NO: " + rS.getRoomFloor_No());
 		System.out.println("FOOD ORDERED: ");
 		for(Food food : rService.getFoodList()) {

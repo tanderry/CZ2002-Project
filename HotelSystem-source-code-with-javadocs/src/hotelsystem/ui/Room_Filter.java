@@ -37,7 +37,7 @@ public class Room_Filter {
       	ArrayList<Room> matchingRoomList = getAllCurrentVacantRooms();
     	    int choice;
         do {
-        	System.out.println("~~~~~~~~ ROOM AVAILABILITY MENU ~~~~~~~~~");
+        	System.out.println("___________ ROOM AVAILABILITY MENU ___________");
         	System.out.println("Add filter:");
         	
         	if(!wifi) {System.out.println("1.WIFI");}
@@ -47,7 +47,7 @@ public class Room_Filter {
             if(!bedtype) {System.out.println("5.Bedtype");}
             System.out.println("6.Refresh all filters");
             System.out.println("0.Back to previous level");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("______________________________________________");
             choice = sc.nextInt();
             switch (choice) {
             	case 1:
@@ -100,7 +100,8 @@ public class Room_Filter {
     
     
     private void printRooms(ArrayList<Room> rList) {
-    		System.out.println("~~~~~~~~~~~~~~~~~~~~ ROOM AVAILABILITY ~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("______________________ ROOM AVAILABILITY ______________________");
+			System.out.println("");
     	    if (!rList.isEmpty()) {
     	    	System.out.println("Available rooms matching your search:");
     	     	char floor = rList.get(1).getRoomFloorNo().charAt(1);
@@ -115,14 +116,14 @@ public class Room_Filter {
     	       		
     	       	}
     	       	System.out.println();
-    	       	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    	       	System.out.println("______________________________________________________________");
     	       	System.out.println();
     	       	System.out.println("Add more filters or refresh your filters to do a new search.");
     	       	System.out.println();
     	    }
     	    else {
     	    	    System.out.println("No rooms matching your search.");
-    	    	    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    	    	    System.out.println("______________________________________________________________");
     	    }
     }
     

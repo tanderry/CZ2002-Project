@@ -470,6 +470,7 @@ public class ReservationUI {
 	        }
 		}
 		System.out.println("_________________________ ROOMS AVAILABLE _________________________");
+		System.out.println("");
 		System.out.println(String.format("%5s %15s %8s %15s %15s", "Room No", "Room Type", "Wifi" , "Smoking Room", "Window View"));
 		if(!checkRoom.isEmpty()) {
 			for (Room room : checkRoom) {
@@ -534,6 +535,7 @@ public class ReservationUI {
 		Date start = null;
 		Date end = null;
 		System.out.println("_______________ CONFIRMATION _______________");
+		System.out.println("");
 		System.out.println("RESERVATION CODE: " + r.getReservationCode());
 		System.out.println("GUEST: " + r.getGuest().getName());
 		System.out.print("ROOMS RESERVED: ");
@@ -631,6 +633,7 @@ public class ReservationUI {
 		statusList = r.getStatusList();
 		
 		System.out.println("______________ RESERVATION ______________");
+		System.out.println("");
 		System.out.println("Reservation Code: " + r.getReservationCode());
 		System.out.println("Guest Name: " + r.getGuest().getName());
 		System.out.print("Rooms Booked: ");
@@ -690,6 +693,7 @@ public class ReservationUI {
 			Reservation view = Reservation_Manager.getInstance().getReservationByID(id);
 			System.out.println();
 			System.out.println("_______________ RESERVATION _______________");
+			System.out.println("");
 			System.out.println("Reservation Code: " + view.getReservationCode());
 			System.out.println("Guest Name: " + view.getGuest().getName());
 			System.out.print("Rooms Booked: ");

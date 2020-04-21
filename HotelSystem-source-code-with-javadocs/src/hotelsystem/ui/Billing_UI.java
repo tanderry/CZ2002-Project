@@ -51,7 +51,7 @@ public class Billing_UI {
     	double taxAmt = 0;
     	double grandTotal = 0;
     	String paymentMode = null;
-    	String paymentStatus = "Pending Payment";
+    	String paymentStatus = "Payment not yet settled";
     	ArrayList<Room_Service> rSerList = new ArrayList<>();
     	Card card = null;
     	
@@ -137,7 +137,7 @@ public class Billing_UI {
         sc.nextLine();
         if (choice==1) {
                 if (cico.getGuest().getCardDetails().getCcname()!=null) {
-                	System.out.print("Card Details Found on Guest's Profile, Do you want use existing card to make payment? (Y-Yes N-No)");
+                	System.out.print("We have found the card details! Use this card for payment? (Y-Yes N-No)");
                 	char reply = sc.next().charAt(0);
                 	sc.nextLine();
 				    if (reply=='Y' || reply=='y') {
@@ -149,7 +149,7 @@ public class Billing_UI {
 				    	card = createCard();
 				    }
 				    else
-				    	System.out.println("Invaild Input! Please insert again.");
+				    	System.out.println("Invaild! Please insert again.");
 		         	}
                 else {
                 	card = createCard();
@@ -157,7 +157,7 @@ public class Billing_UI {
         }
         else if (choice==2) {
                 paymentMode = "Cash";
-                paymentStatus = "Completed";
+                paymentStatus = "Settled";
         }
         else {
                 System.out.println("Invalid Choice");
@@ -166,7 +166,7 @@ public class Billing_UI {
         Billing bill = new Billing(cico,rSerList,roomTotal,roomSerTotal,totalPrice,discountAmt,taxAmt,grandTotal,paymentMode,card,paymentStatus);
         Billing_Manager.getInstance().insertBill(bill);
         
-        System.out.println("-------Payment Successful-------");
+        System.out.println("-------Payment Completed-------");
         return;
     }
     

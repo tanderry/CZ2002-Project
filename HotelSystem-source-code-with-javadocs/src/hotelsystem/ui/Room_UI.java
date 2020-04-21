@@ -38,7 +38,8 @@ public class Room_UI {
     public void displayOptions() {
         int choice;
         do {
-        	System.out.println("____________ ROOM MENU ____________");
+			System.out.println("____________ ROOM MENU ____________");
+			System.out.println("");
             System.out.println("1.Create Room");
             System.out.println("2.Update Room Details");
             System.out.println("0.Back to previous level");

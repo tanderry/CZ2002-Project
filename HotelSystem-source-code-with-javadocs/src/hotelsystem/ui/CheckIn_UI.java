@@ -46,8 +46,8 @@ public class CheckIn_UI {
 	        do {
 				System.out.println("_____________ CHECK-IN MENU _____________");
 				System.out.println("");
-	            System.out.println("1. New Check-In        ");
-	            System.out.println("2. Reservation Check-In");
+	            System.out.println("1. New Check-In         ");
+	            System.out.println("2. Reservation Check-In ");
 	            System.out.println("0. Back to previous menu");
 	            System.out.println("_________________________________________");
 	            System.out.print("Pick a choice: ");
@@ -109,7 +109,7 @@ public class CheckIn_UI {
     public void createReservationCheckIn() {
     	ArrayList<Room_Status> statusList = new ArrayList<>();
     	sc = new Scanner(System.in);
-    	System.out.println("Enter Reservation Code");
+    	System.out.println("Please enter your reservation code");
         String rcode = sc.nextLine();
         Reservation rdetails = Reservation_Manager.getInstance().getReservation(rcode);
         if (rdetails != null) {
@@ -145,7 +145,7 @@ public class CheckIn_UI {
 	        }
         }
         else {
-        	System.out.println("Invaild Code. Try Again.");
+        	System.out.println("Invaild code. Please try again.");
         }
     }
     
@@ -184,7 +184,7 @@ public class CheckIn_UI {
             e.printStackTrace();
         }
         if (startDate.equals(endDate)) {
-        	System.out.println("Minumum Duration is one night. Please Try Again.");
+        	System.out.println("You have to stay for at least one night. Please enter a new date.");
         	return;
         }
         else {
@@ -204,7 +204,7 @@ public class CheckIn_UI {
         	ArrayList<Room> tempRoomList = new ArrayList<>();
              do {
             	 Room_Type_Manager.getInstance().displayAllRoomType();
-            	 System.out.println("Which Room Do You Want? ");
+            	 System.out.println("Please enter your choice of room");
                  roomtype = sc.nextInt();
                  Room_Type_Manager.getInstance().getRoom(roomtype);
                  
@@ -213,14 +213,14 @@ public class CheckIn_UI {
                 if(tempRoomList == null) { 
 					System.out.println("_________________________ ROOMS AVAILABLE _________________________");
 					System.out.println("");
-                	System.out.println("No Available Rooms for for your chosen dates");
+                	System.out.println("No available rooms for your chosen dates");
                		System.out.println("___________________________________________________________________");
                		noroom=true;
                 }
                 else
                 	noroom=false;
             } while(noroom);
-            System.out.print("Do you want to filter? (Y/N) :");
+            System.out.print("Would you like to filter your search? (Y/N) :");
             char filterChoice = sc.next().charAt(0);
             if(filterChoice=='Y' || filterChoice=='y') {
             	ArrayList<Room> filterList = filterRoom(tempRoomList, roomNoList, roomtype);
@@ -251,7 +251,7 @@ public class CheckIn_UI {
         			}
         		}
                	else {
-               		System.out.println("No Available Rooms for for your chosen dates");
+               		System.out.println("No available rooms for your chosen dates");
                		System.out.println("_________________________________________________________________");
                		return;
                	}
@@ -263,7 +263,7 @@ public class CheckIn_UI {
             }
             Boolean check = null;
             do {
-	            System.out.print("Please Select a Room No(xx-xx): ");
+	            System.out.print("Please Select a Room Number(xx-xx): ");
 	            Boolean proceed = null;
 	            roomNo = sc.next();
 	            for (Room tList : tempRoomList) {
@@ -365,7 +365,7 @@ public class CheckIn_UI {
 			}
 		}
 		else if(checkRoom.isEmpty()){
-			System.out.println("No Available Rooms for for your chosen dates");
+			System.out.println("No available rooms for your chosen dates");
 			System.out.println("_________________________________________________________________");
 			return null;
 		}
@@ -422,7 +422,7 @@ public class CheckIn_UI {
         System.out.println("");
         System.out.println("DATE FROM: " + from);
         System.out.println("DATE END: " + to);
-        System.out.println("NO OF CHILDRENS: " + cico.getnumChildren());
+        System.out.println("NO OF CHILDREN: " + cico.getnumChildren());
         System.out.println("NO OF ADULTS: " + cico.getnumAdults());
         DecimalFormat df = new DecimalFormat("#.00"); 
         System.out.println("TOTAL CHARGE: $" + df.format(total));
