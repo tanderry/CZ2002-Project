@@ -10,6 +10,7 @@ import hotelsystem.entity.Cico;
 import hotelsystem.entity.Guest;
 import hotelsystem.entity.Room_Status;
 
+<<<<<<< HEAD:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckOut_UI.java
 
 public class CheckOut_UI {
 	private static CheckOut_UI instance = null;
@@ -22,13 +23,27 @@ public class CheckOut_UI {
     
     
     public static CheckOut_UI getInstance() {
+=======
+public class CheckOutUI {
+	private static CheckOutUI instance = null;
+    private Scanner sc;
+
+    private CheckOutUI() {
+        sc = new Scanner(System.in);
+    }
+    
+    public static CheckOutUI getInstance() {
+>>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckOutUI.java
         if (instance == null) {
             instance = new CheckOut_UI();
         }
         return instance;
     }
 	
+<<<<<<< HEAD:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckOut_UI.java
     
+=======
+>>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckOutUI.java
 	public void displayOptions() {
         int choice;
         try {
@@ -83,9 +98,14 @@ public class CheckOut_UI {
         }
     }
 	
+<<<<<<< HEAD:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckOut_UI.java
 	
 	private void checkOutAll(Cico cico) {
 		ArrayList<Room_Status> updateList = new ArrayList<Room_Status>();
+=======
+	private void checkOutAll(CheckInCheckOut cico) {
+		ArrayList<RoomStatus> updateList = new ArrayList<RoomStatus>();
+>>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckOutUI.java
 		
 		for (Room_Status roomStatus : cico.getRoomStatus()) {
 			if(roomStatus.getStatus().equals("Checked-In")) {
@@ -104,9 +124,14 @@ public class CheckOut_UI {
 		Billing_UI.getInstance().generateBill(cico);
 	}
 	
+<<<<<<< HEAD:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckOut_UI.java
 	
 	private void checkOutSelectedRooms(Cico cico) {
 		ArrayList<Room_Status> updateList = new ArrayList<Room_Status>();
+=======
+	private void checkOutSelectedRooms(CheckInCheckOut cico) {
+		ArrayList<RoomStatus> updateList = new ArrayList<RoomStatus>();
+>>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckOutUI.java
 		System.out.println("Please Select a Room No(xx-xx): ");
         String roomNo = sc.next();
         for (Room_Status roomStatus : cico.getRoomStatus()) {

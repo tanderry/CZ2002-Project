@@ -2,7 +2,10 @@ package hotelsystem.entity;
 
 import java.util.Date;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6
 public class Promo {
 	private static int maxID = 1;
 	private int promo_ID;

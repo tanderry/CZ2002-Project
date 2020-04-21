@@ -3,7 +3,10 @@ package hotelsystem.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+<<<<<<< HEAD:HotelSystem-source-code-with-javadocs/src/hotelsystem/entity/Cico.java
 
+=======
+>>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6:HotelSystem-source-code-with-javadocs/src/hotelsystem/entity/CheckInCheckOut.java
 @SuppressWarnings("serial")
 public class Cico implements Serializable{
 	private static int maxID = 1;
