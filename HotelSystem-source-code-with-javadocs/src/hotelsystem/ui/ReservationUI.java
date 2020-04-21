@@ -9,15 +9,15 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import hotelsystem.controller.ReservationController;
-import hotelsystem.controller.RoomController;
-import hotelsystem.controller.RoomStatusController;
-import hotelsystem.controller.RoomTypeController;
+import hotelsystem.controller.Reservation_Manager;
+import hotelsystem.controller.Room_Manager;
+import hotelsystem.controller.Room_Status_Manager;
+import hotelsystem.controller.Room_Type_Manager;
 import hotelsystem.entity.Guest;
 import hotelsystem.entity.Reservation;
 import hotelsystem.entity.Room;
-import hotelsystem.entity.RoomStatus;
-import hotelsystem.entity.RoomType;
+import hotelsystem.entity.Room_Status;
+import hotelsystem.entity.Room_Type;
 
 public class ReservationUI {
 	private static ReservationUI instance = null;
@@ -43,7 +43,7 @@ public class ReservationUI {
     }
 	
 	public void displayOptions() {
-		ReservationController.getInstance().checkExpiredRoom();
+		Reservation_Manager.getInstance().checkExpiredRoom();
         int choice;
         do {
 			System.out.println("__________ RESERVATION MENU __________");
@@ -80,7 +80,7 @@ public class ReservationUI {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
            
     	Guest guest = null; 						
-    	ArrayList<RoomStatus> statusList = new ArrayList<RoomStatus>();
+    	ArrayList<Room_Status> statusList = new ArrayList<Room_Status>();
     	Boolean addRoomB = null;
         ArrayList<String> roomNoList = new ArrayList<>();
         String roomNo = null;
@@ -103,11 +103,11 @@ public class ReservationUI {
     		case 1:	do {
 				        System.out.println("Enter Guest Name: ");
 				        guestName = sc.next();
-				        guest = GuestUI.getInstance().searchGuest(guestName);
+				        guest = Guest_UI.getInstance().searchGuest(guestName);
 			        	}
 			        while (guest==null);
     				break;
-    		case 2:	guest = GuestUI.getInstance().createnewGuest();
+    		case 2:	guest = Guest_UI.getInstance().createnewGuest();
     				if(guest == null) {
     					
     				}
@@ -133,10 +133,10 @@ public class ReservationUI {
         }
         
         do {
-            RoomTypeController.getInstance().displayAllRoomType();
+            Room_Type_Manager.getInstance().displayAllRoomType();
             System.out.print("Which Room Do You Want? ");
             roomType = sc.nextInt();
-            RoomTypeController.getInstance().getRoom(roomType);
+            Room_Type_Manager.getInstance().getRoom(roomType);
             
            ArrayList<Room> tempRoomList = new ArrayList<>();
            tempRoomList = checkExisting(startDate, endDate, roomType, roomNoList);
@@ -161,7 +161,7 @@ public class ReservationUI {
 	                   	if(!filterList.isEmpty()) {
 	            			for (Room room : filterList) {
 	            				if(!room.getRoomFloorNo().equals(roomNo)) {
-	            					RoomType rT = RoomTypeController.getInstance().getRoom(room.getRoomType());
+	            					Room_Type rT = Room_Type_Manager.getInstance().getRoom(room.getRoomType());
 	            					if(room.isWifi() == true) {
 	            						wifi = "Yes";
 	            					}else {
@@ -197,7 +197,7 @@ public class ReservationUI {
 	                   roomNo = sc.next();
 	                   roomNoList.add(roomNo);
 	                   
-	                   RoomStatus roomStatus = new RoomStatus(roomNo, guest.getGuest_ID() , "WaitList", startDate, endDate);
+	                   Room_Status roomStatus = new Room_Status(roomNo, guest.getGuest_ID() , "WaitList", startDate, endDate);
 	                   statusList.add(roomStatus);
 	                   
 	    	           System.out.print("Do you wish to add additional rooms? (Y/N): ");
@@ -223,7 +223,7 @@ public class ReservationUI {
             	if(!filterList.isEmpty()) {
         			for (Room room : filterList) {
         				if(!room.getRoomFloorNo().equals(roomNo)) {
-        					RoomType rT = RoomTypeController.getInstance().getRoom(room.getRoomType());
+        					Room_Type rT = Room_Type_Manager.getInstance().getRoom(room.getRoomType());
         					if(room.isWifi() == true) {
         						wifi = "Yes";
         					}else {
@@ -259,7 +259,7 @@ public class ReservationUI {
                roomNo = sc.next();
                roomNoList.add(roomNo);
                
-               RoomStatus roomStatus = new RoomStatus(roomNo, guest.getGuest_ID() , "Reserved", startDate, endDate);
+               Room_Status roomStatus = new Room_Status(roomNo, guest.getGuest_ID() , "Reserved", startDate, endDate);
                statusList.add(roomStatus);
                
 	           System.out.print("Do you wish to add additional rooms? (Y/N): ");
@@ -274,12 +274,12 @@ public class ReservationUI {
         if(statusList != null) {
         	 double total = 0;
              SimpleDateFormat dfS = new SimpleDateFormat("EEE");
-             for(RoomStatus rS : statusList) {
+             for(Room_Status rS : statusList) {
              	int days = (int) ((rS.getDate_to().getTime() - rS.getDate_from().getTime()) / (1000 * 60 * 60 * 24)-1);
              	Date dateCheck = rS.getDate_from();
              	for(int i = 0; i <= days ; i++) {
-                 	Room rm = RoomController.getInstance().getRoom(rS.getRoomFloor_No());
-                 	RoomType rT = RoomTypeController.getInstance().getRoom(rm.getRoomType());
+                 	Room rm = Room_Manager.getInstance().getRoom(rS.getRoomFloor_No());
+                 	Room_Type rT = Room_Type_Manager.getInstance().getRoom(rm.getRoomType());
                  	if(dateCheck.equals(rS.getDate_from()) || dateCheck.equals(rS.getDate_to()) || (dateCheck.after(rS.getDate_from()) && dateCheck.before(rS.getDate_to()))) {
                  		String dateCheckS = dfS.format(dateCheck);
                  		if(dateCheckS.equals("Sat") || dateCheckS.equals("Sun"))
@@ -293,9 +293,9 @@ public class ReservationUI {
              
              Reservation reservation = new Reservation(guest, statusList, noChild, noAdult, status);
              printConfirmation(reservation, total);
-             ReservationController.getInstance().addReservation(reservation);
-             for(RoomStatus s : statusList) {
-             	RoomStatusController.getInstance().addRoomStatus(s);
+             Reservation_Manager.getInstance().addReservation(reservation);
+             for(Room_Status s : statusList) {
+             	Room_Status_Manager.getInstance().addRoomStatus(s);
              }
              ReservationUI.creationComplete(reservation);
         }
@@ -313,13 +313,13 @@ public class ReservationUI {
 		try {
 			System.out.print("Please enter Reservation Code: ");
 			String rCode = sc.next();
-			Reservation r = ReservationController.getInstance().getReservation(rCode);
+			Reservation r = Reservation_Manager.getInstance().getReservation(rCode);
 			System.out.println("_______________ RESERVATION _______________");
 			System.out.println("");
 			System.out.println("Reservation Code: " + r.getReservationCode());
 			System.out.println("Guest Name: " + r.getGuest().getName());
 			System.out.print("Rooms Booked: ");
-			for (RoomStatus status : r.getStatusList()) {
+			for (Room_Status status : r.getStatusList()) {
 	        	System.out.print("#"+status.getRoomFloor_No() + " ");
 	        	start = status.getDate_from();
 	        	end = status.getDate_to();
@@ -348,7 +348,7 @@ public class ReservationUI {
 						child = sc.nextInt();
 						r.setNumberOfChildren(child);
 						break;
-				case 3: RoomTypeController.getInstance().displayAllRoomType();
+				case 3: Room_Type_Manager.getInstance().displayAllRoomType();
 			            System.out.print("Which Room Do You Want? ");
 			            roomType = sc.nextInt();
 			            ArrayList<Room> tempRoomList = new ArrayList<>();
@@ -362,7 +362,7 @@ public class ReservationUI {
 		               	if(!filterList.isEmpty()) {
 		               		for (Room room : filterList) {
 		                   		if(!room.getRoomFloorNo().equals(roomNo)) {
-		                   			RoomType rT = RoomTypeController.getInstance().getRoom(room.getRoomType());
+		                   			Room_Type rT = Room_Type_Manager.getInstance().getRoom(room.getRoomType());
 		                   			System.out.println(room.getRoomFloorNo() + " " + rT.getRoomType() + " " 
 		                   			+ rT.getWeekDayRate() + " " + rT.getWeekEndRate());
 		                   		}
@@ -384,15 +384,15 @@ public class ReservationUI {
 		                roomNo = sc.next();
 		                roomNoList.add(roomNo);
 		               
-		                RoomStatus roomStatus = new RoomStatus(roomNo, r.getGuest().getGuest_ID() , "Reserved", start, end);
-		                RoomStatusController.getInstance().addRoomStatus(roomStatus);
+		                Room_Status roomStatus = new Room_Status(roomNo, r.getGuest().getGuest_ID() , "Reserved", start, end);
+		                Room_Status_Manager.getInstance().addRoomStatus(roomStatus);
 		                r.getStatusList().add(roomStatus);
 						break;
 				case 4: System.out.print("Enter room to remove:");
 						String room = sc.next();
-						for (RoomStatus status : r.getStatusList()) {
+						for (Room_Status status : r.getStatusList()) {
 							if(status.getRoomFloor_No().equals(room)) {
-					        	RoomStatusController.getInstance().updateStatustoCancelled(status);
+					        	Room_Status_Manager.getInstance().updateStatustoCancelled(status);
 					        	r.getStatusList().remove(status);
 							}
 				        }
@@ -400,7 +400,7 @@ public class ReservationUI {
 				case 0: break;
 			}
 			
-			ReservationController.getInstance().updateReservation(r);
+			Reservation_Manager.getInstance().updateReservation(r);
 			ReservationUI.updateComplete(r);
 		}
 		catch(NullPointerException e) {
@@ -411,7 +411,7 @@ public class ReservationUI {
 	private ArrayList<Room> checkExisting(Date start, Date end, int roomtype, ArrayList<String> roomNo) {
 		String wifi, smoke, view;
 		ArrayList<Room> checkRoom = new ArrayList<>();
-		ArrayList<Room> roomList = RoomController.getInstance().getAllRoom(start, end);
+		ArrayList<Room> roomList = Room_Manager.getInstance().getAllRoom(start, end);
 		if(!roomList.isEmpty()) {
 			for (Room room : roomList) {
 				if(!roomNo.contains(room.getRoomFloorNo())) {
@@ -427,7 +427,7 @@ public class ReservationUI {
 		if(!checkRoom.isEmpty()) {
 			for (Room room : checkRoom) {
 				if(room.getRoomType() == roomtype) {
-					RoomType rT = RoomTypeController.getInstance().getRoom(room.getRoomType());
+					Room_Type rT = Room_Type_Manager.getInstance().getRoom(room.getRoomType());
 					if(room.isWifi() == true) {
 						wifi = "Yes";
 					}else {
@@ -459,7 +459,7 @@ public class ReservationUI {
 	private ArrayList<Room> waitListExisting(Date start, Date end, int roomtype, ArrayList<String> roomNo) {
 		String wifi, smoke, view;
 		ArrayList<Room> checkRoom = new ArrayList<>();
-		ArrayList<Room> roomList = RoomController.getInstance().getAllWaitListRoom(start, end);
+		ArrayList<Room> roomList = Room_Manager.getInstance().getAllWaitListRoom(start, end);
 		if(!roomList.isEmpty()) {
 			for (Room room : roomList) {
 				if(!roomNo.contains(room.getRoomFloorNo())) {
@@ -474,7 +474,7 @@ public class ReservationUI {
 		if(!checkRoom.isEmpty()) {
 			for (Room room : checkRoom) {
 				if(room.getRoomType() == roomtype) {
-					RoomType rT = RoomTypeController.getInstance().getRoom(room.getRoomType());
+					Room_Type rT = Room_Type_Manager.getInstance().getRoom(room.getRoomType());
 					if(room.isWifi() == true) {
 						wifi = "Yes";
 					}else {
@@ -537,7 +537,7 @@ public class ReservationUI {
 		System.out.println("RESERVATION CODE: " + r.getReservationCode());
 		System.out.println("GUEST: " + r.getGuest().getName());
 		System.out.print("ROOMS RESERVED: ");
-        for (RoomStatus status : r.getStatusList()) {
+        for (Room_Status status : r.getStatusList()) {
         	System.out.print("#"+status.getRoomFloor_No() + " ");
         	start = status.getDate_from();
 			end = status.getDate_to();
@@ -560,8 +560,8 @@ public class ReservationUI {
 		Date start = null;
 		Date end = null;
 		
-		Reservation r = ReservationController.getInstance().getReservation(rCode);
-		ArrayList<RoomStatus> statusList = new ArrayList<>();
+		Reservation r = Reservation_Manager.getInstance().getReservation(rCode);
+		ArrayList<Room_Status> statusList = new ArrayList<>();
 		statusList = r.getStatusList();
 		
 		System.out.println("______________ RESERVATION ______________");
@@ -569,7 +569,7 @@ public class ReservationUI {
 		System.out.println("Reservation Code: " + r.getReservationCode());
 		System.out.println("Guest Name: " + r.getGuest().getName());
 		System.out.print("Rooms Booked: ");
-		for(RoomStatus status : statusList) {
+		for(Room_Status status : statusList) {
 			System.out.print("#" + status.getRoomFloor_No() + " ");
 			start = status.getDate_from();
 			end = status.getDate_to();
@@ -585,11 +585,11 @@ public class ReservationUI {
 		try{
 	    	char confirm = sc.next().charAt(0);
 	    	if (confirm=='Y' || confirm=='y') {
-	    		for(RoomStatus rS : statusList) {
-	    			RoomStatusController.getInstance().updateStatustoCancelled(rS);
+	    		for(Room_Status rS : statusList) {
+	    			Room_Status_Manager.getInstance().updateStatustoCancelled(rS);
 	    		}
 	    		r.setStatus("Cancelled");
-		    	ReservationController.getInstance().updateReservation(r);
+		    	Reservation_Manager.getInstance().updateReservation(r);
 		    	System.out.println("Reservation Removed");
 	    	}
 	    	else if(confirm == 'N' || confirm == 'n') {}
@@ -626,15 +626,15 @@ public class ReservationUI {
 		System.out.print("Enter Reservation Code: ");
 		String rCode = sc.next();
 		
-		Reservation r = ReservationController.getInstance().getReservation(rCode);
-		ArrayList<RoomStatus> statusList = new ArrayList<>();
+		Reservation r = Reservation_Manager.getInstance().getReservation(rCode);
+		ArrayList<Room_Status> statusList = new ArrayList<>();
 		statusList = r.getStatusList();
 		
 		System.out.println("______________ RESERVATION ______________");
 		System.out.println("Reservation Code: " + r.getReservationCode());
 		System.out.println("Guest Name: " + r.getGuest().getName());
 		System.out.print("Rooms Booked: ");
-		for(RoomStatus status : statusList) {
+		for(Room_Status status : statusList) {
 			System.out.print("#" + status.getRoomFloor_No() + " ");
 			start = status.getDate_from();
 			end = status.getDate_to();
@@ -655,9 +655,9 @@ public class ReservationUI {
 	}
 	
 	private void printAllReservations() {
-		ArrayList<Reservation> allRList = ReservationController.getInstance().getAllReservation();
+		ArrayList<Reservation> allRList = Reservation_Manager.getInstance().getAllReservation();
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		ArrayList<RoomStatus> statusList = null;
+		ArrayList<Room_Status> statusList = null;
 		Date start = null;
 		Date end = null;
 		
@@ -666,10 +666,10 @@ public class ReservationUI {
 		if(!allRList.isEmpty()) {
 			System.out.println("ReservationID/ReservationCode/GuestName/RoomNo/StartDate/EndDate");
 			for(Reservation r :allRList) {
-				r = ReservationController.getInstance().getReservation(r.getReservationCode());
+				r = Reservation_Manager.getInstance().getReservation(r.getReservationCode());
 				statusList = r.getStatusList();
 				System.out.print(String.format("%1s %16s %12s %5s", r.getReservationID(), r.getReservationCode(), r.getGuest().getName(),""));
-				for(RoomStatus rS : statusList) {
+				for(Room_Status rS : statusList) {
 					System.out.print("#" + rS.getRoomFloor_No() + " ");
 					start = rS.getDate_from();
 					end = rS.getDate_to();
@@ -687,13 +687,13 @@ public class ReservationUI {
 		try {
 			System.out.print("Please enter Reservation ID: ");
 			int id = sc.nextInt();
-			Reservation view = ReservationController.getInstance().getReservationByID(id);
+			Reservation view = Reservation_Manager.getInstance().getReservationByID(id);
 			System.out.println();
 			System.out.println("_______________ RESERVATION _______________");
 			System.out.println("Reservation Code: " + view.getReservationCode());
 			System.out.println("Guest Name: " + view.getGuest().getName());
 			System.out.print("Rooms Booked: ");
-			for(RoomStatus status : statusList) {
+			for(Room_Status status : statusList) {
 				System.out.print("#" + status.getRoomFloor_No() + " ");
 				start = status.getDate_from();
 				end = status.getDate_to();
@@ -715,7 +715,7 @@ public class ReservationUI {
 	}
 	
 	private void retrieveWaitList() {
-		ArrayList<Reservation> waitList = ReservationController.getInstance().getWaitList();
+		ArrayList<Reservation> waitList = Reservation_Manager.getInstance().getWaitList();
 		String status = null;
 		int id;
 		System.out.println("________________________ WAITLIST ________________________");
@@ -724,9 +724,9 @@ public class ReservationUI {
 		if(!waitList.isEmpty()) {
 			for(Reservation re : waitList) {
 	    		Guest g = re.getGuest();
-	    		ArrayList<RoomStatus> rsList = re.getStatusList();
-	    		for(RoomStatus rs : rsList) {
-	    			if(RoomStatusController.getInstance().checkRoomStatus(rs)) {
+	    		ArrayList<Room_Status> rsList = re.getStatusList();
+	    		for(Room_Status rs : rsList) {
+	    			if(Room_Status_Manager.getInstance().checkRoomStatus(rs)) {
 	    				status = "Available";
 	    			}
 	    			else {
@@ -745,11 +745,11 @@ public class ReservationUI {
     	if(check == 'y' || check == 'Y') {
     		System.out.print("Reservation ID to update: ");
     		id = sc.nextInt();
-    		Reservation r = ReservationController.getInstance().getReservationByID(id);
-    		ArrayList<RoomStatus> statusList = r.getStatusList();
+    		Reservation r = Reservation_Manager.getInstance().getReservationByID(id);
+    		ArrayList<Room_Status> statusList = r.getStatusList();
     		r.setStatus("Reserved");
-    		RoomStatusController.getInstance().updateWaitList(statusList);
-    		ReservationController.getInstance().updateReservation(r);
+    		Room_Status_Manager.getInstance().updateWaitList(statusList);
+    		Reservation_Manager.getInstance().updateReservation(r);
     	}
 	}
 }

@@ -2,13 +2,7 @@ package hotelsystem.entity;
 
 import java.io.Serializable;
 
-/**
- * Description for Card
- * contains get & set methods required for Card
- * @since 17/04/2018
- * @version 1.0
- * @author Kan Kah Seng
- */
+
 @SuppressWarnings("serial")
 public class Card implements Serializable{
 	private static int maxID = 1;

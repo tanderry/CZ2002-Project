@@ -7,32 +7,21 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import hotelsystem.controller.PromoController;
-import hotelsystem.controller.RoomTypeController;
+import hotelsystem.controller.Promotion_Manager;
+import hotelsystem.controller.Room_Type_Manager;
 import hotelsystem.entity.Promo;
 
-/**
- * Description of Promo UI
- * Prints out promo interface options
- * @since 17/04/2018
- * @version 1.0
- * @author Kan Kah Seng
- */
+
 public class PromoUI {
 	private static PromoUI instance = null;
 	private final Scanner sc;
 
-	/**
-     * Set up scanner
-     */
+	
 	private PromoUI() {
 		sc = new Scanner(System.in);
 	}
 
-	/**
-     * set Instance if instance is null
-     * return instance
-     */
+	
 	public static PromoUI getInstance() {
 		if (instance == null) {
 			instance = new PromoUI();
@@ -40,10 +29,7 @@ public class PromoUI {
 		return instance;
 	}
 
-	/**
-     * Printing of Promo UI
-     * calls corresponding functions based on input
-     */
+	
 	public void displayOptions() {
 		int choice;
 		try {
@@ -72,10 +58,7 @@ public class PromoUI {
         }
     }
 	
-	/**
-	 * Adding new promotion from a certain date to a certain date
-	 * for guest that specially book a room and check in for the duration
-	 */
+	
 	public void createPromo() {
 		int roomtypeID;
 		String dateFrom;
@@ -85,7 +68,7 @@ public class PromoUI {
         Date startDate = null;
         Date endDate = null;
 		 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		 int roomtype = RoomTypeController.getInstance().getAllRoomType();
+		 int roomtype = Room_Type_Manager.getInstance().getAllRoomType();
      	 System.out.println("Select The Room Type");
      	 try {
 	         roomtypeID = sc.nextInt();
@@ -115,7 +98,7 @@ public class PromoUI {
 	             }
 	             
 	             Promo promo = new Promo(roomtypeID,promo_desc,disc,startDate,endDate);
-	             PromoController.getInstance().addPromo(promo);
+	             Promotion_Manager.getInstance().addPromo(promo);
 			     System.out.println("Promo Code " + promo.getPromo_ID() +  " has been created.");  
 	         }
      	 }
@@ -124,11 +107,9 @@ public class PromoUI {
         }
 	}
 	
-	/**
-	 * Retrieve all ongoing promo and selecting a certain promo using ID to remove
-	 */
+	
 	public void removePromo() {
-		ArrayList<Promo> returnPromo = PromoController.getInstance().getPromoList();
+		ArrayList<Promo> returnPromo = Promotion_Manager.getInstance().getPromoList();
 		if (returnPromo.size()!=0) {
         	System.out.println("Promo ID	Room Type ID	Promo Desc	Promo Discount(in %)	Start Date	End Date");
         	for(Promo promo : returnPromo){
@@ -144,8 +125,8 @@ public class PromoUI {
 			    	System.out.println("Are you sure you want to delete the " +returnPromo.get(promoID-1).getPromo_desc()+ " ? (Y-Yes, N-No)");
 				    char reply = sc.next().charAt(0);
 				    if (reply=='Y' || reply=='y') {
-				    	Promo delete = PromoController.getInstance().getPromo(promoID);
-					    PromoController.getInstance().removePromo(delete);
+				    	Promo delete = Promotion_Manager.getInstance().getPromo(promoID);
+					    Promotion_Manager.getInstance().removePromo(delete);
 					    System.out.println("Promo Removed");
 				    }
 				    else

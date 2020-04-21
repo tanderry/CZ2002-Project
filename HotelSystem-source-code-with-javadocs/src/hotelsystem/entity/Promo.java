@@ -2,13 +2,7 @@ package hotelsystem.entity;
 
 import java.util.Date;
 
-/**
- * Descriptions for Promotions
- * contains get & set methods required for Promotions
- * @since 17/04/2018
- * @version 1.0
- * @author Kan Kah Seng
- */
+
 public class Promo {
 	private static int maxID = 1;
 	private int promo_ID;

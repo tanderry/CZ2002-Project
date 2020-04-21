@@ -11,12 +11,12 @@ public class Reservation implements Serializable{
 	private int reservation_ID;
 	private String reservation_code;
 	private Guest guest;
-	private ArrayList<RoomStatus> statusList = new ArrayList<>();
+	private ArrayList<Room_Status> statusList = new ArrayList<>();
 	private int numChildren;
 	private int numAdults;
 	private String status;
 	
-	public Reservation(Guest guest, ArrayList<RoomStatus> statusList, 
+	public Reservation(Guest guest, ArrayList<Room_Status> statusList, 
 			int noChild, int noAdult, String status) {
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMMyyyy");
@@ -57,7 +57,7 @@ public class Reservation implements Serializable{
 	
 	public Guest getGuest() { return guest; }
 	
-	public ArrayList<RoomStatus> getStatusList(){ return statusList; }
+	public ArrayList<Room_Status> getStatusList(){ return statusList; }
 
 	public int getNumberOfChildren() { return numChildren; }
 
