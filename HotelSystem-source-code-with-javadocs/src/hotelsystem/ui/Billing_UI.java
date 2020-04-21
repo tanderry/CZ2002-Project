@@ -163,7 +163,7 @@ public class Billing_UI {
         }
         
         Billing bill = new Billing(cico,rSerList,roomTotal,roomSerTotal,totalPrice,discountAmt,taxAmt,grandTotal,paymentMode,card,paymentStatus);
-        Billing_Manager.getInstance().addBillPayment(bill);
+        Billing_Manager.getInstance().insertBill(bill);
         
         System.out.println("-------Payment Successful-------");
         return;

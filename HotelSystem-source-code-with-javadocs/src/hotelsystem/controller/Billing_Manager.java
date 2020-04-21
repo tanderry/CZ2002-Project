@@ -28,7 +28,7 @@ public class Billing_Manager implements Serializable{
     }
 	
 	
-	public Billing getBill(int ID) {
+	public Billing returnBill(int ID) {
 		for (Billing bill : billList) {
             if (bill.getBillPayment_ID() == ID)
                 return bill;
@@ -37,7 +37,7 @@ public class Billing_Manager implements Serializable{
     }
 
     
-    public void addBillPayment(Billing bill) {
+    public void insertBill(Billing bill) {
 		billList.add(bill);
         storeData();
     }

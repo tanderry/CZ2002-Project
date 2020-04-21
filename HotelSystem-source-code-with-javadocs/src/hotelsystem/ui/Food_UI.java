@@ -73,7 +73,7 @@ public class Food_UI {
 				System.out.println("Description Of How Food Is Prepared: ");
 				foodDescription = sc.nextLine();
 				Food food = new Food(foodName, foodPrice, foodDescription);
-				Food_Manager.getInstance().addFood(food);
+				Food_Manager.getInstance().insertFood(food);
 				System.out.println("Food Name " + food.getfood_name() +  " has been created."); 
 			}
 		}
@@ -181,7 +181,7 @@ public class Food_UI {
 		try{
 			char reply = sc.next().charAt(0);
 			if (reply=='Y' || reply=='y') {
-				Food_Manager.getInstance().removeFood(food);
+				Food_Manager.getInstance().deleteFood(food);
 				System.out.println("Food Removed");
 			}
 			else

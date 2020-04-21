@@ -40,12 +40,12 @@ public class Food_Manager extends Database_Manager{
 		return null;
 	}
 
-	public void removeFood(Food food) {
+	public void deleteFood(Food food) {
 		foodList.remove(food);
 		SaveDB();
 	}
 
-	public void addFood(Food food) {
+	public void insertFood(Food food) {
 		foodList.add(food);
 		SaveDB();
 	}

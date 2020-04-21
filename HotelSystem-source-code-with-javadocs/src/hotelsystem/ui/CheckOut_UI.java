@@ -99,7 +99,7 @@ public class CheckOut_UI {
         }
 		cico.setRoomStatus(updateList);
 		cico.setStatus("Checked-Out");
-		Cico_Manager.getInstance().updateCheckInCheckOut(cico);
+		Cico_Manager.getInstance().updatecico(cico);
 		System.out.println("All rooms has been checked-out successfully. Generating Bill Invoice...");
 		Billing_UI.getInstance().generateBill(cico);
 	}
@@ -123,11 +123,11 @@ public class CheckOut_UI {
 		System.out.println("Room Number: " + roomNo + " has been checked-out successfully.");
 		boolean check = Cico_Manager.getInstance().getGuestFullOut(cico.getGuest().getGuest_ID());
 		if(check) {
-				Cico_Manager.getInstance().updateCheckInCheckOut(cico);
+				Cico_Manager.getInstance().updatecico(cico);
 		}
 		else {
 			cico.setStatus("Checked-Out");
-			Cico_Manager.getInstance().updateCheckInCheckOut(cico);
+			Cico_Manager.getInstance().updatecico(cico);
 			System.out.println("All rooms has been checked-out successfully. Generating Bill Invoice...");
 			Billing_UI.getInstance().generateBill(cico);
 		}

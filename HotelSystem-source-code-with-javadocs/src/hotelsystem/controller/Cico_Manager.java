@@ -30,7 +30,7 @@ public class Cico_Manager implements Serializable{
     }
 	
 	
-	public void updateCheckInCheckOut(Cico cico) {
+	public void updatecico(Cico cico) {
 		checkInList.remove(cico);
 		checkInList.add(cico);
         storeData();
@@ -77,13 +77,13 @@ public class Cico_Manager implements Serializable{
     }
 	
 	
-    public void removeCheckIn(Cico cico)  {
+    public void deleteCheckIn(Cico cico)  {
     	checkInList.remove(cico);
         storeData();
     }
 
     
-    public void addCheckIn(Cico cico) {
+    public void insertCheckIn(Cico cico) {
     	checkInList.add(cico);
         storeData();
     }

@@ -138,7 +138,7 @@ public class CheckIn_UI {
 	             	}
 	             }
 		        printConfirmation(cico, total);
-		        Cico_Manager.getInstance().addCheckIn(cico);
+		        Cico_Manager.getInstance().insertCheckIn(cico);
 		        rdetails.setStatus("Checked-In");
 		        Reservation_Manager.getInstance().updateReservation(rdetails);
 	        }
@@ -313,7 +313,7 @@ public class CheckIn_UI {
         
 	        Cico cico = new Cico(guest,noChild,noAdult,statusList,"Checked-In",null);
 	        printConfirmation(cico, total);
-	        Cico_Manager.getInstance().addCheckIn(cico);
+	        Cico_Manager.getInstance().insertCheckIn(cico);
 	        
 	        for(Room_Status s : statusList) {
 	        	Room_Status_Manager.getInstance().addRoomStatus(s);
