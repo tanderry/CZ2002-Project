@@ -3,14 +3,6 @@ package hotelsystem.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Description of Room Status
- * contains get & set methods required for Room Status
- * @since 17/04/2018
- * @version 1.0
- * @author Kenneth Yak Yong Seng
- * @author Kan Kah Seng
- */
 @SuppressWarnings("serial")
 public class RoomStatus implements Serializable{
 	private static int incID = 1;

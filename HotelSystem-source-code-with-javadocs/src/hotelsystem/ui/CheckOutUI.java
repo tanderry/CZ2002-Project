@@ -10,28 +10,14 @@ import hotelsystem.entity.CheckInCheckOut;
 import hotelsystem.entity.Guest;
 import hotelsystem.entity.RoomStatus;
 
-/**
- * Description of Checking Out UI
- * Full check out process with generating bill payment
- * @since 17/04/2018
- * @version 1.0
- * @author Kan Kah Seng
- */
 public class CheckOutUI {
 	private static CheckOutUI instance = null;
     private Scanner sc;
 
-    /**
-     * Set up scanner
-     */
     private CheckOutUI() {
         sc = new Scanner(System.in);
     }
     
-    /**
-     * set Instance if instance is null
-     * return instance
-     */
     public static CheckOutUI getInstance() {
         if (instance == null) {
             instance = new CheckOutUI();
@@ -39,10 +25,6 @@ public class CheckOutUI {
         return instance;
     }
 	
-    /**
-     * Printing of Checking Out UI
-     * Retrieve room details based on guest name and calls corresponding functions based on input
-     */
 	public void displayOptions() {
         int choice;
         try {
@@ -97,9 +79,6 @@ public class CheckOutUI {
         }
     }
 	
-	/**
-	 * Check-out all rooms and and generate bill for guest
-	 */
 	private void checkOutAll(CheckInCheckOut cico) {
 		ArrayList<RoomStatus> updateList = new ArrayList<RoomStatus>();
 		
@@ -120,10 +99,6 @@ public class CheckOutUI {
 		BillPaymentUI.getInstance().generateBill(cico);
 	}
 	
-	/**
-	 * Check-out selected room by user input on room number
-	 * validate if it's the last room checked-out it will proceed to generate bill for guest 
-	 */
 	private void checkOutSelectedRooms(CheckInCheckOut cico) {
 		ArrayList<RoomStatus> updateList = new ArrayList<RoomStatus>();
 		System.out.println("Please Select a Room No(xx-xx): ");

@@ -58,11 +58,12 @@ public class CheckInUI {
         int choice;
         try {
 	        do {
-	            System.out.println("~~~~~~~~~~ CHECK-IN MENU ~~~~~~~~~~~");
-	            System.out.println("1. Walk-In Check-In");
+				System.out.println("_____________ CHECK-IN MENU _____________");
+				System.out.println("");
+	            System.out.println("1. New Check-In        ");
 	            System.out.println("2. Reservation Check-In");
 	            System.out.println("0. Back to previous menu");
-	            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	            System.out.println("_________________________________________");
 	            System.out.print("Pick a choice: ");
 	            choice = sc.nextInt();
 	            switch (choice) {
@@ -163,7 +164,7 @@ public class CheckInUI {
 	        }
         }
         else {
-        	System.out.println("Invaild Reservation Code. Please Try Again.");
+        	System.out.println("Invaild Code. Try Again.");
         }
     }
     
@@ -204,7 +205,7 @@ public class CheckInUI {
             e.printStackTrace();
         }
         if (startDate.equals(endDate)) {
-        	System.out.println("Error: Minumum Duration is one night. Please Try Again.");
+        	System.out.println("Minumum Duration is one night. Please Try Again.");
         	return;
         }
         else {
@@ -231,9 +232,10 @@ public class CheckInUI {
                 tempRoomList = checkExisting(storeDate, endDate, roomtype, roomNoList);
                 
                 if(tempRoomList == null) { 
-                	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~ ROOMS AVAILABLE ~~~~~~~~~~~~~~~~~~~~~~~~");
+					System.out.println("_________________________ ROOMS AVAILABLE _________________________");
+					System.out.println("");
                 	System.out.println("No Available Rooms for for your chosen dates");
-               		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+               		System.out.println("___________________________________________________________________");
                		noroom=true;
                 }
                 else
@@ -243,7 +245,8 @@ public class CheckInUI {
             char filterChoice = sc.next().charAt(0);
             if(filterChoice=='Y' || filterChoice=='y') {
             	ArrayList<Room> filterList = filterRoom(tempRoomList, roomNoList, roomtype);
-            	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~ ROOMS AVAILABLE ~~~~~~~~~~~~~~~~~~~~~~~~");
+				System.out.println("_________________________ ROOMS AVAILABLE _________________________");
+				System.out.println("");
         		System.out.println(String.format("%5s %15s %8s %15s %15s", "Room No", "Room Type", "Wifi" , "Smoking Room", "Window View"));
             	if(!filterList.isEmpty()) {
         			for (Room room : filterList) {
@@ -270,10 +273,10 @@ public class CheckInUI {
         		}
                	else {
                		System.out.println("No Available Rooms for for your chosen dates");
-               		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+               		System.out.println("_________________________________________________________________");
                		return;
                	}
-            		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            		System.out.println("_________________________________________________________________");
                }
             else if(filterChoice=='N' || filterChoice=='n') {}
             else {
@@ -340,12 +343,8 @@ public class CheckInUI {
 	        	RoomStatusController.getInstance().addRoomStatus(s);
         	}
         }
-    }
-    
-    /**
-	 * Function to check for any vacant rooms according to indicated date from and to date to
-	 * returns list of vacant rooms of different room type
-	 */
+	}
+	
     private ArrayList<Room> checkExisting(Date start, Date end, int roomtype, ArrayList<String> roomNo) {
 		String wifi, smoke, view;
 		ArrayList<Room> checkRoom = new ArrayList<>();
@@ -359,7 +358,8 @@ public class CheckInUI {
 				}
 	        }
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~ ROOMS AVAILABLE ~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("________________________ ROOMS AVAILABLE ________________________");
+		System.out.println("");
 		System.out.println(String.format("%5s %15s %8s %15s %15s", "Room No", "Room Type", "Wifi" , "Smoking Room", "Window View"));
 		if(!checkRoom.isEmpty()) {
 			for (Room room : checkRoom) {
@@ -386,10 +386,10 @@ public class CheckInUI {
 		}
 		else if(checkRoom.isEmpty()){
 			System.out.println("No Available Rooms for for your chosen dates");
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("_________________________________________________________________");
 			return null;
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("_________________________________________________________________");
         return checkRoom;
     }
     
@@ -436,8 +436,8 @@ public class CheckInUI {
     private void printConfirmation(CheckInCheckOut cico, double total) {
     	Date from = null;
     	Date to = null;
-		System.out.println("~~~~~~~~~~~~~~~ CONFIRMATION ~~~~~~~~~~~~~~~");
-		
+		System.out.println("_________________ CONFIRMATION _________________");
+		System.out.println("");
 		System.out.println("GUEST: " + cico.getGuest().getName());
 		System.out.print("ROOMS CHECKED-IN: ");
         for (RoomStatus status : cico.getRoomStatus()) {
@@ -452,6 +452,6 @@ public class CheckInUI {
         System.out.println("NO OF ADULTS: " + cico.getnumAdults());
         DecimalFormat df = new DecimalFormat("#.00"); 
         System.out.println("TOTAL CHARGE: $" + df.format(total));
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("________________________________________________");
 	}
 }

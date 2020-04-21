@@ -71,7 +71,8 @@ public class BillPaymentUI {
     	
     	System.out.println("=================================== \n"
     			+"------------Hotel System------------\n"
-    			+"~~~~~~~~~~~~~~~~Rooms~~~~~~~~~~~~~~~\n");
+				+"_______________ Rooms_______________\n"
+				+"");
         SimpleDateFormat dfS = new SimpleDateFormat("EEE");
         for(RoomStatus rS : cico.getRoomStatus()) {
         	days = (int) ((rS.getDate_to().getTime() - rS.getDate_from().getTime()) / (1000 * 60 * 60 * 24));
@@ -109,9 +110,9 @@ public class BillPaymentUI {
         	System.out.println("-- Discount: 			-" + discountTotalAmt);
         }
         roomTotal = roomTotal-discountTotalAmt;
-        System.out.println("=======================================");
+        System.out.println("---------------------------------------");
         System.out.println("-- Room Total Cost: 		" + (roomTotal));
-        System.out.println("=======================================");
+        System.out.println("---------------------------------------");
         
         
         for(RoomStatus rS : cico.getRoomStatus()) {
@@ -119,7 +120,8 @@ public class BillPaymentUI {
     	}
     	
         if(!rSerList.isEmpty()) {
-        	System.out.println("~~~~~~~~~~~~~Room Service~~~~~~~~~~~~~");
+			System.out.println("_______________Room Service_______________");
+			System.out.println("");
         	for(RoomService rmS : rSerList) {
         		if(!rmS.getStatus().equals("Cancelled")) {
 	        		ArrayList<Food> foodList = rmS.getFoodList();
@@ -183,10 +185,6 @@ public class BillPaymentUI {
         return;
     }
     
-    /**
-	 * Create card details for guest
-	 * return card details
-	 */
     private Card createCard() {
     	System.out.println("Enter Card Full Name:");
         String ccName = sc.nextLine();

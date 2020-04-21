@@ -3,13 +3,6 @@ package hotelsystem.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Description for Check In Check Out
- * contains get & set methods required for Check In Check Out
- * @since 17/04/2018
- * @version 1.0
- * @author Kan Kah Seng
- */
 @SuppressWarnings("serial")
 public class CheckInCheckOut implements Serializable{
 	private static int maxID = 1;
