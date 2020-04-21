@@ -106,14 +106,8 @@ public class Billing_UI {
     	}
     	
         if(!rSerList.isEmpty()) {
-<<<<<<< HEAD:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/Billing_UI.java
         	System.out.println("~~~~~~~~~~~~~Room Service~~~~~~~~~~~~~");
         	for(Room_Service rmS : rSerList) {
-=======
-			System.out.println("_______________Room Service_______________");
-			System.out.println("");
-        	for(RoomService rmS : rSerList) {
->>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/BillPaymentUI.java
         		if(!rmS.getStatus().equals("Cancelled")) {
 	        		ArrayList<Food> foodList = rmS.getFoodList();
 	        		for(Food f : foodList) {
@@ -176,10 +170,7 @@ public class Billing_UI {
         return;
     }
     
-<<<<<<< HEAD:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/Billing_UI.java
     
-=======
->>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/BillPaymentUI.java
     private Card createCard() {
     	System.out.println("Enter Card Full Name:");
         String ccName = sc.nextLine();

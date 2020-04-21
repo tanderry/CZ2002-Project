@@ -3,10 +3,6 @@ package hotelsystem.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-<<<<<<< HEAD:HotelSystem-source-code-with-javadocs/src/hotelsystem/entity/Room_Status.java
-
-=======
->>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6:HotelSystem-source-code-with-javadocs/src/hotelsystem/entity/RoomStatus.java
 @SuppressWarnings("serial")
 public class Room_Status implements Serializable{
 	private static int incID = 1;

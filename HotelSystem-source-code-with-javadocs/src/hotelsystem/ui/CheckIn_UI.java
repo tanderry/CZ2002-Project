@@ -322,14 +322,9 @@ public class CheckIn_UI {
 	        	Room_Status_Manager.getInstance().addRoomStatus(s);
         	}
         }
-<<<<<<< HEAD:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckIn_UI.java
     }
     
     
-=======
-	}
-	
->>>>>>> 815e9e30f7e2b7359bdf310d93c1c1c1dd138ea6:HotelSystem-source-code-with-javadocs/src/hotelsystem/ui/CheckInUI.java
     private ArrayList<Room> checkExisting(Date start, Date end, int roomtype, ArrayList<String> roomNo) {
 		String wifi, smoke, view;
 		ArrayList<Room> checkRoom = new ArrayList<>();
