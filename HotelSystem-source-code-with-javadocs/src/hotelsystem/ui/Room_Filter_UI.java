@@ -7,41 +7,27 @@ import java.util.Scanner;
 import hotelsystem.controller.RoomController;
 import hotelsystem.entity.Room;
 
-/**
- * Description of Room Availability UI
- * Prints out room availability interface options
- * @since 17/04/2018
- * @version 1.0
- * @author Solberg Anna
- */
-public class RoomAvailabilityUI {
-	private static RoomAvailabilityUI instance = null;
+
+public class Room_Filter_UI {
+	private static Room_Filter_UI instance = null;
     private Scanner sc;
     private Date today = new Date( );
     private Date tomorrow = new Date(today.getTime() + (1000 * 60 * 60 * 24));
     
-    /**
-     * Set up scanner
-     */
-    private RoomAvailabilityUI() {
+   
+    private Room_Filter_UI() {
         sc = new Scanner(System.in);
     }
     
-    /**
-     * set Instance if instance is null
-     * return instance
-     */
-    public static RoomAvailabilityUI getInstance() {
+   
+    public static Room_Filter_UI getInstance() {
         if (instance == null) {
-            instance = new RoomAvailabilityUI();
+            instance = new Room_Filter_UI();
         }
         return instance;
     }
     
-    /**
-     * Printing of Reservation UI
-     * calls corresponding functions based on input
-     */
+   
     public void displayOptions() {
     	boolean wifi = false;
     	boolean view = false;
@@ -52,12 +38,12 @@ public class RoomAvailabilityUI {
     	    int choice;
         do {
         	System.out.println("~~~~~~~~ ROOM AVAILABILITY MENU ~~~~~~~~~");
-        	System.out.println("Add filter:");
+        	System.out.println("Add your desired filter:");
         	
-        	if(!wifi) {System.out.println("1.WIFI");}
-            if(!view) {System.out.println("2.View");}
-            if(!smoke) {System.out.println("3.Smoking");}
-            if(!noSmoke) {System.out.println("4.No-smoking");}
+        	if(!wifi) {System.out.println("1.WIFI Availability");}
+            if(!view) {System.out.println("2.Scenary Availability");}
+            if(!smoke) {System.out.println("3.Smoking Availabilty");}
+            if(!noSmoke) {System.out.println("4.No-smoking Availability");}
             if(!bedtype) {System.out.println("5.Bedtype");}
             System.out.println("6.Refresh all filters");
             System.out.println("0.Back to previous level");
@@ -106,18 +92,13 @@ public class RoomAvailabilityUI {
         } while (choice > 0);
     }
     
-    /**
-     * Retrieve all vacant rooms from current day to the next day
-     * return list of Rooms
-     */
+   
     private ArrayList<Room> getAllCurrentVacantRooms() {
 	    	ArrayList<Room> vacantList = RoomController.getInstance().getAllRoom(today,tomorrow);
 	    	return vacantList;
     }
     
-    /**
-     * Function to print list of vacant rooms
-     */
+   
     private void printRooms(ArrayList<Room> rList) {
     		System.out.println("~~~~~~~~~~~~~~~~~~~~ ROOM AVAILABILITY ~~~~~~~~~~~~~~~~~~~~");
     	    if (!rList.isEmpty()) {
@@ -159,10 +140,7 @@ public class RoomAvailabilityUI {
     	    return filterRList;
     }
     
-    /**
-     * Filter list of rooms for smoking
-     * return list of filtered smoking rooms
-     */
+  
     private ArrayList<Room> smokingFilter(ArrayList<Room> rList) {
       	ArrayList<Room> filterRList = new ArrayList<Room>();
       	for (Room r : rList) {
@@ -173,10 +151,7 @@ public class RoomAvailabilityUI {
     	    return filterRList;
     }
     
-    /**
-     * Filter list of non-smoking rooms
-     * return list of non-smoking rooms
-     */
+
     private ArrayList<Room> noSmokingFilter(ArrayList<Room> rList) {
       	ArrayList<Room> filterRList = new ArrayList<Room>();
       	for (Room r : rList) {
@@ -187,10 +162,7 @@ public class RoomAvailabilityUI {
     	    return filterRList;
     }
     
-    /**
-     * Filter list of rooms with scenary
-     * return list of rooms with scenary
-     */
+  
     private ArrayList<Room> viewFilter(ArrayList<Room> rList) {
       	ArrayList<Room> filterRList = new ArrayList<Room>();
       	for (Room r : rList) {
@@ -201,11 +173,7 @@ public class RoomAvailabilityUI {
     	    return filterRList;
     }
     
-    /**
-     * Print menu for bed type filter
-     * filter through bed type according to input
-     * return filtered list of rooms
-     */
+  
     private ArrayList<Room> bedtypeFilter(ArrayList<Room> rList) {
     	   
     	System.out.println("What bedtype do you want?");

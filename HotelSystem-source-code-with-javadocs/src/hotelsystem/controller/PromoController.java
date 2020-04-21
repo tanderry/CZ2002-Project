@@ -10,27 +10,16 @@ import java.util.StringTokenizer;
 
 import hotelsystem.entity.Promo;
 
-/**
- * Description of Promo Controller
- * To store, retrieve and delete promotions
- * @since 17/04/2018
- * @version 1.0
- * @author Kan Kah Seng
- */
+
 public class PromoController extends DatabaseController{
 	private static final String DB_PATH = "DB/Promo.dat";
 	private static PromoController instance = null;
 	private final ArrayList<Promo> promoList = new ArrayList<>();
 	
-	/**
-	 * Constructor for Promo Controller
-	 */
+	
 	private PromoController() {}
 
-	/**
-     * set Instance if instance is null
-     * return instance
-     */
+	
 	public static PromoController getInstance() {
 		if (instance == null) {
 			instance = new PromoController();
@@ -38,9 +27,7 @@ public class PromoController extends DatabaseController{
 		return instance;
 	}
 
-	/**
-	 * retrieve promotion with promoID
-	 */
+	
 	public Promo getPromo(int promoID) {
 		for (Promo promo : promoList) {
 			if (promo.getPromo_ID()==promoID){
@@ -50,10 +37,7 @@ public class PromoController extends DatabaseController{
 		return null;
 	}
 	
-	/**
-	 * find promotions for selected rooms and date
-	 * return promo if found
-	 */
+	
 	public Promo findPromo(int roomType_ID, Date start, Date end) {
 		for (Promo promo : promoList) {
 			if (promo.getRoomType_ID()==roomType_ID){
@@ -71,26 +55,19 @@ public class PromoController extends DatabaseController{
 		return null;
 	}
 
-	/**
-	 * Remove promotions from database
-	 */
+	
 	public void removePromo(Promo promo) {
 		promoList.remove(promo);
 		SaveDB();
 	}
 
-	/**
-	 * Add promotions to database
-	 */
+	
 	public void addPromo(Promo promo) {
 		promoList.add(promo);
 		SaveDB();
 	}
 	
-	/**
-	 * Retrieve a list of promotions 
-	 * return ArrayList of promotions
-	 */
+	
 	public ArrayList<Promo> getPromoList() {
     	ArrayList<Promo> getPromo = new ArrayList<>();
     	for(Promo promo : promoList){
@@ -99,10 +76,7 @@ public class PromoController extends DatabaseController{
     	return getPromo;
     }
 	
-	/**
-     * Loading of Promotions from Database
-     * returns error message if file not found
-     */
+	
 	@Override
 	public boolean LoadDB() {
 		SimpleDateFormat df = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
@@ -147,10 +121,7 @@ public class PromoController extends DatabaseController{
 		}
 	}
 
-	/**
-     *  Saving of Promotions into Database
-     *  returns error message if file not found
-     */
+	
 	@Override
 	public void SaveDB() {
 		List<String> output = new ArrayList<>();

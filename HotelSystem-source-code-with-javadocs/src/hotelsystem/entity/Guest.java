@@ -2,28 +2,35 @@ package hotelsystem.entity;
 
 import java.io.Serializable;
 
+/**
+ * Description for Guest
+ * contains get & set methods required Guest
+ * @since 17/04/2018
+ * @version 1.0
+ * @author Kan Kah Seng
+ */
 @SuppressWarnings("serial")
 public class Guest implements Serializable{
 	private static int maxID = 1;
 	private int guest_ID;
-	private String nric;
+	private String identity_no;
 	private String name;
 	private String address;
-	private long phone;
+	private long contact_no;
 	private String country;
-	private char sex;
+	private char gender;
 	private String nationality;
 	private Card cardDetails;
 	
-	public Guest(String nric, String name, String address, long phone, String country,
-			char sex, String nationality, Card cardDetails) {
+	public Guest(String identity_no, String name, String address, long contact_no, String country,
+			char gender, String nationality, Card cardDetails) {
 		this.guest_ID = maxID;
-		this.nric = nric;
+		this.identity_no = identity_no;
 		this.name = name;
 		this.address = address;
-		this.phone = phone;
+		this.contact_no = contact_no;
 		this.country = country;
-		this.sex = sex;
+		this.gender = gender;
 		this.nationality = nationality;
 		this.cardDetails = cardDetails;
 		maxID++;
@@ -39,9 +46,9 @@ public class Guest implements Serializable{
 
 	public void setGuest_ID(int guest_ID) { this.guest_ID = guest_ID; }
 
-	public String getIdentity_no() { return nric; }
+	public String getIdentity_no() { return identity_no; }
 
-	public void setIdentity_no(String nric) { this.nric = nric; }
+	public void setIdentity_no(String identity_no) { this.identity_no = identity_no; }
 
 	public String getName() { return name;}
 
@@ -51,17 +58,17 @@ public class Guest implements Serializable{
 
 	public void setAddress(String address) { this.address = address; }
 
-	public long getContact_no() { return phone; }
+	public long getContact_no() { return contact_no; }
 
-	public void setContact_no(long phone) { this.phone = phone; }
+	public void setContact_no(long contact_no) { this.contact_no = contact_no; }
 
 	public String getCountry() { return country; }
 
 	public void setCountry(String country) { this.country = country; }
 
-	public char getGender() { return sex; }
+	public char getGender() { return gender; }
 
-	public void setGender(char sex) { this.sex = sex; }
+	public void setGender(char gender) { this.gender = gender; }
 
 	public String getNationality() { return nationality; }
 

@@ -1,19 +1,37 @@
 package hotelsystem.ui;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import MainSystem.HotelApp;
 import hotelsystem.controller.GuestController;
 import hotelsystem.entity.Card;
 import hotelsystem.entity.Guest;
 
+/**
+ * Description of Guest UI
+ * Prints out guest interface options to add, retrieve, update or delete guest
+ * @since 17/04/2018
+ * @version 1.0
+ * @author Kan Kah Seng
+ */
 public class GuestUI {
 	private static GuestUI instance = null;
     private Scanner sc;
 
+    /**
+     * Set up scanner
+     */
     private GuestUI() {
         sc = new Scanner(System.in);
     }
-
+    
+    /**
+     * set Instance if instance is null
+     * return instance
+     */
     public static GuestUI getInstance() {
         if (instance == null) {
             instance = new GuestUI();
@@ -21,18 +39,23 @@ public class GuestUI {
         return instance;
     }
 
+    /**
+     * Printing of Guest UI
+     * calls corresponding functions based on input
+     */
     public void displayOptions() {
         int choice;
 	        do {
 	            System.out.println("_________________________ GUEST MENU ___________________________\n"
 						 + "|                                                              |\n"
 						 + "|  1. Create Guest                                             |\n"
-						 + "|  2. Obtain Guest Details                                     |\n"
+						 + "|  2. Retrieve Guest Details                                   |\n"
 						 + "|  3. Update Guest Details                                     |\n"
-						 + "|  4. Remove Guest Details                                     |\n"
-						 + "|  0. Go Back                                                  |\n"
+						 + "|  4. Remove Guest Particulars                                 |\n"
+						 + "|  0. Back to previous level                                   |\n"
 						 + "|______________________________________________________________|\n");
 	            choice = sc.nextInt();
+	            //sc.nextLine();
 	            switch (choice) {
 	                case 1:
 	                    createGuestDetails();
@@ -56,14 +79,18 @@ public class GuestUI {
         
     }
     
+    /**
+	 * Creating of Guest Details
+	 * create and store guest details into database
+	 */
     private void createGuestDetails() {
         sc = new Scanner(System.in);
         String guestName;
-        String nric;
+        String identityNo;
         String address;
-        long phoneNo;
+        long contactNo;
         String country;
-        char sex;
+        char gender;
         String nationality;
         String ccName = null,ccDate =null;
         long ccNum = 0;
@@ -71,24 +98,24 @@ public class GuestUI {
         
 	        System.out.println("Enter Guest Name: ");
 	        guestName = sc.nextLine();
-		    System.out.println("Enter Guest NRIC: ");
-		    nric = sc.nextLine();
-		   if (checkExistingGuestByIC(nric)!=null) {
+		    System.out.println("Enter Guest Identity Number: ");
+		    identityNo = sc.nextLine();
+		   if (checkExistingGuestByIC(identityNo)!=null) {
 				System.out.println("Identity Numnber exist in the system. Please Try Again.");
 				return;
 		   }
 		   else {
 		        System.out.println("Enter Address:");
 		        address = sc.nextLine();
-		        System.out.println("Enter Phone Number:");
-		        phoneNo = sc.nextLong();
+		        System.out.println("Enter Contact Number:");
+		        contactNo = sc.nextLong();
 		        sc.nextLine();
 		        System.out.println("Enter Country:");
 		        country = sc.nextLine();
-		        System.out.println("Enter Sex (M-Male, F-Female)");
-		        sex = sc.nextLine().toUpperCase().charAt(0);
-		        if (sex!='M') {
-		        	if (sex!='F') {
+		        System.out.println("Enter Gender (M-Male, F-Female)");
+		        gender = sc.nextLine().toUpperCase().charAt(0);
+		        if (gender!='M') {
+		        	if (gender!='F') {
 		        		System.out.println("Invaild Input! Please insert again.");
 		        		return;
 		        	}
@@ -112,19 +139,23 @@ public class GuestUI {
 		    	}
 		        
 		        Card newcc = new Card(ccName,ccNum,ccDate,ccCVV);
-		        Guest guest = new Guest(nric, guestName, address, phoneNo, country, sex, nationality,newcc);
+		        Guest guest = new Guest(identityNo, guestName, address, contactNo, country, gender, nationality,newcc);
 		        GuestController.getInstance().addGuest(guest);
 		        System.out.println("Guest Name " + guest.getName() +  " has been created.");  
 	        }
         
     }
-
+    
+    /**
+	 * Creating of Guest Details for new customer when checking in or making new reservation
+	 * return guest details in order to continue with the checking in or reservation process
+	 */
     public Guest createnewGuest() {
         sc = new Scanner(System.in);
         String guestName;
-        String nric;
+        String identityNo;
         String address;
-        long phoneNo;
+        long contactNo;
         String country;
         char gender;
         String nationality;
@@ -137,8 +168,8 @@ public class GuestUI {
 	        System.out.println("Enter Guest Name: ");
 	        guestName = sc.nextLine();
 		        System.out.println("Enter Guest Identity Number: ");
-		        nric = sc.nextLine();
-		   if (checkExistingGuestByIC(nric)!=null) {
+		        identityNo = sc.nextLine();
+		   if (checkExistingGuestByIC(identityNo)!=null) {
 		       System.out.println("Identity Numnber exist in the system. Please Try Again.");
 		       rguest= null;
 		   }
@@ -146,7 +177,7 @@ public class GuestUI {
 		        System.out.println("Enter Address:");
 		        address = sc.nextLine();
 		        System.out.println("Enter Contact Number:");
-		        phoneNo = sc.nextLong();
+		        contactNo = sc.nextLong();
 		        sc.nextLine();
 		        System.out.println("Enter Country:");
 		        country = sc.nextLine();
@@ -178,7 +209,7 @@ public class GuestUI {
 		    	}
 		        
 		        Card newcc = new Card(ccName,ccNum,ccDate,ccCVV);
-		        Guest guest = new Guest(nric, guestName, address, phoneNo, country, gender, nationality,newcc);
+		        Guest guest = new Guest(identityNo, guestName, address, contactNo, country, gender, nationality,newcc);
 		        rguest = GuestController.getInstance().addGuestReturn(guest);
 		        System.out.println("Guest Name " + guest.getName() +  " has been created.");  
 		       }
@@ -189,7 +220,11 @@ public class GuestUI {
         }
         return rguest;
     }
-
+    
+    /**
+	 * Check for existing guest with the same identity number
+	 * return guest if found
+	 */
     private Guest checkExistingGuestByIC(String identity_No) {
         Guest rGuest = GuestController.getInstance().getGuestByIdenNo(identity_No);
         if (rGuest!=null) {
@@ -199,7 +234,11 @@ public class GuestUI {
         	return null;
         }
     }
-
+    
+    /**
+	 * Search guest based on keywords and show a list of similar names
+	 * return guest details when user selected the correct user ID
+	 */
     protected Guest searchGuest(String guestName) {
     	ArrayList<Guest> sGuest = new ArrayList<>();
     	sGuest = GuestController.getInstance().searchGuestList(guestName);
@@ -232,6 +271,9 @@ public class GuestUI {
         }
     }
     
+    /**
+	 * Retrieve and print out all the guest's details
+	 */
     private void retrieveGuestDetails(){
     	Guest guest = null;
     	String gender = null, cc = null;
@@ -261,15 +303,18 @@ public class GuestUI {
 					 + "Name: " + guest.getName() +"\n"
 					 + "Identity Number: " + guest.getIdentity_no() +"\n"
 					 + "Address: " + guest.getAddress() +"\n"
-					 + "Phone Number: " + guest.getContact_no() +"\n"
+					 + "Contact Number: " + guest.getContact_no() +"\n"
 					 + "Country: " + guest.getCountry() +"\n"
-					 + "Sex: " + gender +"\n"
+					 + "Gender: " + gender +"\n"
 					 + "Nationality: " + guest.getNationality() +"\n"
 					 + "Credit Card: " + cc +"\n"
 					 + "---------------------------------------");
 		}
     }
     
+    /**
+	 * Update Guest Details and update database
+	 */
     private void updateGuestDetails() {
     		int choice2;
     		Guest guest = null;
@@ -326,8 +371,8 @@ public class GuestUI {
 	    					break;
 	    				case 4:
 	    					System.out.println("Enter New Contact Number: ");
-	    					int phoneNo = sc.nextInt();
-	    					guest.setContact_no(phoneNo);
+	    					int contactNo = sc.nextInt();
+	    					guest.setContact_no(contactNo);
 	    					System.out.println("Contact Number Saved");
 	    					break;
 	    				case 5:
@@ -380,6 +425,9 @@ public class GuestUI {
             }
     }
     
+    /**
+	 * Remove guest by searching the keyword to retrieve the list of guest and select the guest ID to delete
+	 */
     public void removeGuestDetails() {
     	String guestName;
         sc = new Scanner(System.in);

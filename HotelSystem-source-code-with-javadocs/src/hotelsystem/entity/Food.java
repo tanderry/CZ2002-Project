@@ -2,6 +2,13 @@ package hotelsystem.entity;
 
 import java.io.Serializable;
 
+/**
+ * Description for Food
+ * contains get & set methods required for Food
+ * @since 17/04/2018
+ * @version 1.0
+ * @author Koh Wei Hao
+ */
 @SuppressWarnings("serial")
 public class Food implements Serializable{
 	private static int foodID = 1;

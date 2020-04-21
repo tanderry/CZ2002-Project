@@ -11,14 +11,18 @@ import java.util.ArrayList;
 import hotelsystem.entity.RoomService;
 import hotelsystem.ui.RoomServiceUI;
 
+
 @SuppressWarnings("serial")
 public class RoomServiceController implements Serializable{
 	private static RoomServiceController instance = null;
 	private final ArrayList<RoomService> roomServiceList;
 	
+	
+	
 	private RoomServiceController() {
 		roomServiceList = new ArrayList<>();
     }
+	
 	
 	public static RoomServiceController getInstance() {
         if (instance == null) {
@@ -27,10 +31,12 @@ public class RoomServiceController implements Serializable{
         return instance;
     }
 	
+	
 	public void addRoomService(RoomService roomService) {
 		roomServiceList.add(roomService);
 		storeData();
 	}
+	
 	
 	public RoomService getRoomService(int roomStatusID) {
 		for (RoomService rS : roomServiceList) {
@@ -40,12 +46,14 @@ public class RoomServiceController implements Serializable{
         return null;
 	}
 	
+	
 	public void updateRoomService(int roomStatusID, String status) {
 		RoomService rs = getRoomService(roomStatusID);
 		rs.setStatus(status);
 		RoomServiceUI.updateComplete(rs);
 		storeData();
 	}
+	
 	
 	public ArrayList<RoomService> getRSList(int roomStatusID) {
     	ArrayList<RoomService> result = new ArrayList<>();
@@ -57,6 +65,7 @@ public class RoomServiceController implements Serializable{
     	return result;
     }
 	
+	
 	public void storeData() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("DB/RoomService.ser"));
@@ -64,13 +73,17 @@ public class RoomServiceController implements Serializable{
             out.writeInt(RoomService.getIncID());
             for (RoomService roomService : roomServiceList)
                 out.writeObject(roomService);
+            //System.out.printf("RoomServiceController: %,d Entries Saved.\n", roomServiceList.size());
             out.close();
         } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
     
+	
     public void loadData () {
+        // create an ObjectInputStream for the file we created before
         ObjectInputStream ois;
         try {
             ois = new ObjectInputStream(new FileInputStream("DB/RoomService.ser"));
@@ -80,8 +93,10 @@ public class RoomServiceController implements Serializable{
             System.out.println("RoomServiceController: " + noOfOrdRecords + " Entries Loaded");
             for (int i = 0; i < noOfOrdRecords; i++) {
             	roomServiceList.add((RoomService) ois.readObject());
+                //orderList.get(i).getTable().setAvailable(false);
             }
         } catch (IOException | ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }

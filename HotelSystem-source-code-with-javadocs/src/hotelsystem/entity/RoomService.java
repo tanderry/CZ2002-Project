@@ -3,6 +3,13 @@ package hotelsystem.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Description of Room Service
+ * contains get & set methods required for Room Service
+ * @since 17/04/2018
+ * @version 1.0
+ * @author Kenneth Yak Yong Seng
+ */
 @SuppressWarnings("serial")
 public class RoomService implements Serializable{
 	private static int incID = 1;

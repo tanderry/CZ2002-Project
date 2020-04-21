@@ -9,51 +9,37 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import hotelsystem.controller.CheckInCheckOutController;
+import hotelsystem.controller.Checkinout_Manager;
 import hotelsystem.controller.ReservationController;
 import hotelsystem.controller.RoomController;
 import hotelsystem.controller.RoomStatusController;
-import hotelsystem.controller.RoomTypeController;
-import hotelsystem.entity.CheckInCheckOut;
+import hotelsystem.controller.Room_Type_Manager;
+import hotelsystem.entity.Check_In_Out;
 import hotelsystem.entity.Guest;
 import hotelsystem.entity.Reservation;
 import hotelsystem.entity.Room;
 import hotelsystem.entity.RoomStatus;
 import hotelsystem.entity.RoomType;
 
-/**
- * Description of Checking In UI
- * Enable guest to check-in via walk in or by reservation
- * @since 17/04/2018
- * @version 1.0
- * @author Kan Kah Seng
- */
-public class CheckInUI {
-	private static CheckInUI instance = null;
+
+public class Check_In_UI {
+	private static Check_In_UI instance = null;
     private Scanner sc;
 
-    /**
-     * Set up scanner
-     */
-    private CheckInUI() {
+ 
+    private Check_In_UI() {
         sc = new Scanner(System.in);
     }
     
-    /**
-     * set Instance if instance is null
-     * return instance
-     */
-    public static CheckInUI getInstance() {
+  
+    public static Check_In_UI getInstance() {
         if (instance == null) {
-            instance = new CheckInUI();
+            instance = new Check_In_UI();
         }
         return instance;
     }
 
-    /**
-     * Printing of Checking In UI
-     * calls corresponding functions based on input
-     */
+
     public void displayOptions() {
         int choice;
         try {
@@ -85,9 +71,7 @@ public class CheckInUI {
         }
     }
     
-    /**
-	 * Walk in guest check in and check if it's existing or new guest
-	 */
+ 
     public void createWalkInCheckIn() {
     	Guest guest = null;
     	int choice;
@@ -136,7 +120,7 @@ public class CheckInUI {
 	        	RoomStatusController.getInstance().updateStatustoCheckedIn(roomS);
 	        	statusList.add(roomS);
 	        }
-	        CheckInCheckOut cico = new CheckInCheckOut(rdetails.getGuest(),rdetails.getNumberOfChildren(),rdetails.getNumberOfAdults(),statusList,"Checked-In",null);
+	        Check_In_Out cico = new Check_In_Out(rdetails.getGuest(),rdetails.getNumberOfChildren(),rdetails.getNumberOfAdults(),statusList,"Checked-In",null);
 	        if(statusList != null) {
 	        	 double total = 0;
 	             SimpleDateFormat dfS = new SimpleDateFormat("EEE");
@@ -145,7 +129,7 @@ public class CheckInUI {
 	             	Date dateCheck = rS.getDate_from();
 	             	for(int i = 0; i <= days ; i++) {
 	                 	Room rm = RoomController.getInstance().getRoom(rS.getRoomFloor_No());
-	                 	RoomType rT = RoomTypeController.getInstance().getRoom(rm.getRoomType());
+	                 	RoomType rT = Room_Type_Manager.getInstance().getRoom(rm.getRoomType());
 	                 	if(dateCheck.equals(rS.getDate_from()) || dateCheck.equals(rS.getDate_to()) || (dateCheck.after(rS.getDate_from()) && dateCheck.before(rS.getDate_to()))) {
 	                 		String dateCheckS = dfS.format(dateCheck);
 	                 		if(dateCheckS.equals("Sat") || dateCheckS.equals("Sun"))
@@ -157,7 +141,7 @@ public class CheckInUI {
 	             	}
 	             }
 		        printConfirmation(cico, total);
-		        CheckInCheckOutController.getInstance().addCheckIn(cico);
+		        Checkinout_Manager.getInstance().addCheckIn(cico);
 		        rdetails.setStatus("Checked-In");
 		        ReservationController.getInstance().updateReservation(rdetails);
 	        }
@@ -223,10 +207,10 @@ public class CheckInUI {
         do {
         	ArrayList<Room> tempRoomList = new ArrayList<>();
              do {
-            	 RoomTypeController.getInstance().displayAllRoomType();
+            	 Room_Type_Manager.getInstance().displayAllRoomType();
             	 System.out.println("Which Room Do You Want? ");
                  roomtype = sc.nextInt();
-                 RoomTypeController.getInstance().getRoom(roomtype);
+                 Room_Type_Manager.getInstance().getRoom(roomtype);
                  
                 tempRoomList = checkExisting(storeDate, endDate, roomtype, roomNoList);
                 
@@ -248,7 +232,7 @@ public class CheckInUI {
             	if(!filterList.isEmpty()) {
         			for (Room room : filterList) {
         				if(!room.getRoomFloorNo().equals(roomNo)) {
-        					RoomType rT = RoomTypeController.getInstance().getRoom(room.getRoomType());
+        					RoomType rT = Room_Type_Manager.getInstance().getRoom(room.getRoomType());
         					if(room.isWifi() == true) {
         						wifi = "Yes";
         					}else {
@@ -320,7 +304,7 @@ public class CheckInUI {
             	Date dateCheck = rS.getDate_from();
             	for(int i = 0; i <= days ; i++) {
                 	Room rm = RoomController.getInstance().getRoom(rS.getRoomFloor_No());
-                	RoomType rT = RoomTypeController.getInstance().getRoom(rm.getRoomType());
+                	RoomType rT = Room_Type_Manager.getInstance().getRoom(rm.getRoomType());
                 	if(dateCheck.equals(rS.getDate_from()) || dateCheck.equals(rS.getDate_to()) || (dateCheck.after(rS.getDate_from()) && dateCheck.before(rS.getDate_to()))) {
                 		String dateCheckS = dfS.format(dateCheck);
                 		if(dateCheckS.equals("Sat") || dateCheckS.equals("Sun"))
@@ -332,9 +316,9 @@ public class CheckInUI {
             	}
             }
         
-	        CheckInCheckOut cico = new CheckInCheckOut(guest,noChild,noAdult,statusList,"Checked-In",null);
+	        Check_In_Out cico = new Check_In_Out(guest,noChild,noAdult,statusList,"Checked-In",null);
 	        printConfirmation(cico, total);
-	        CheckInCheckOutController.getInstance().addCheckIn(cico);
+	        Checkinout_Manager.getInstance().addCheckIn(cico);
 	        
 	        for(RoomStatus s : statusList) {
 	        	RoomStatusController.getInstance().addRoomStatus(s);
@@ -364,7 +348,7 @@ public class CheckInUI {
 		if(!checkRoom.isEmpty()) {
 			for (Room room : checkRoom) {
 				if(room.getRoomType() == roomtype) {
-					RoomType rT = RoomTypeController.getInstance().getRoom(room.getRoomType());
+					RoomType rT = Room_Type_Manager.getInstance().getRoom(room.getRoomType());
 					if(room.isWifi() == true) {
 						wifi = "Yes";
 					}else {
@@ -433,7 +417,7 @@ public class CheckInUI {
     /**
 	 * Takes in Check In Check Out and prints out confirmation
 	 */
-    private void printConfirmation(CheckInCheckOut cico, double total) {
+    private void printConfirmation(Check_In_Out cico, double total) {
     	Date from = null;
     	Date to = null;
 		System.out.println("~~~~~~~~~~~~~~~ CONFIRMATION ~~~~~~~~~~~~~~~");
@@ -448,8 +432,8 @@ public class CheckInUI {
         System.out.println("");
         System.out.println("DATE FROM: " + from);
         System.out.println("DATE END: " + to);
-        System.out.println("NO OF CHILDRENS: " + cico.getnumChildren());
-        System.out.println("NO OF ADULTS: " + cico.getnumAdults());
+        System.out.println("NO OF CHILDRENS: " + cico.getNumber_of_children());
+        System.out.println("NO OF ADULTS: " + cico.getNumber_of_adults());
         DecimalFormat df = new DecimalFormat("#.00"); 
         System.out.println("TOTAL CHARGE: $" + df.format(total));
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
